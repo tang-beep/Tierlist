@@ -1,0 +1,37 @@
+# =========================
+# FRONTEND
+# =========================
+front/node_modules
+front/dist
+front/dist-ssr
+front/*.local
+
+# =========================
+# BACKEND (.NET)
+# =========================
+backend/bin/
+backend/obj/
+backend/*.user
+backend/*.suo
+
+# Images uploadées
+backend/images/
+
+# =========================
+# ENV / SECRETS
+# =========================
+.env
+appsettings.Development.json
+
+# =========================
+# OS / IDE
+# =========================
+.vscode/
+.idea/
+.DS_Store
+.vs/
+
+# =========================
+# DOCKER
+# =========================
+docker-compose.override.yml

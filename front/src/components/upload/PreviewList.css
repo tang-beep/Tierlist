@@ -1,0 +1,23 @@
+.preview-list {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .preview-item {
+    width: 120px;
+    aspect-ratio: 1;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background: #111;
+    cursor: pointer;
+    transition: filter .2s ease;
+  }
+  
+  .preview-item:hover {
+    filter: brightness(0.6);
+  }
+  

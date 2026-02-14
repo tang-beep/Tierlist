@@ -1,0 +1,74 @@
+.tag-selector {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.tag-search {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #555;
+  margin-bottom: 10px;
+  width: 220px;
+  background: #111;
+  color: white;
+}
+
+/* -------- TAG LIST -------- */
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  overflow: hidden;           /* 🔥 coupe proprement */
+  transition: max-height .25s ease;
+}
+
+/* -------- TAG -------- */
+
+.tag-chip {
+  height: var(--tag-height);
+  line-height: var(--tag-height);
+
+  padding: 0 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1px solid #777;
+  background: #222;
+  white-space: nowrap;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tag-chip:hover {
+  opacity: 0.85;
+}
+
+.tag-chip.selected {
+  background: #646cff;
+  border-color: #646cff;
+}
+
+/* -------- ACTIONS -------- */
+
+.tag-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.tag-actions button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #444;
+  color: white;
+}
+
+.tag-actions button:hover {
+  background: #666;
+}
