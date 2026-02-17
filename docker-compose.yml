@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   db:
     image: postgres:16
@@ -27,6 +25,15 @@ services:
       ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=tierdb;Username=tieruser;Password=tierpass"
     volumes:
       - imagesdata:/app/images
+
+  frontend:
+    build:
+      context: ./front
+    container_name: tierlist-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
 
 volumes:
   dbdata:

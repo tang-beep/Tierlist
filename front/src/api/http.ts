@@ -1,4 +1,4 @@
-const BASE_URL = "https://localhost:7022/api";
+export const BASE_URL = import.meta.env.VITE_API_URL + '/api';
 
 /* Fonction de base pour faire une requête http */
 export async function http<T>(url: string, options?: RequestInit): Promise<T> {

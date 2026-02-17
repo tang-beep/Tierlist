@@ -1,4 +1,4 @@
-import { http } from "./http";
+import { http, BASE_URL } from "./http";
 import type { ImageItem, SelectableId } from "../types";
 
 /* Récupère toutes les images */
@@ -26,7 +26,7 @@ export async function uploadImages(files: File[], titles: string[], tag: string)
     formData.append("Tag", tag);
     formData.append("File", files[i]);
 
-    const res = await fetch("https://localhost:7022/api/Images/upload", {
+    const res = await fetch(BASE_URL + "/Images/upload", {
       method: "POST",
       body: formData
     });
