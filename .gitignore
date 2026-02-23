@@ -14,7 +14,9 @@ backend/obj/
 backend/*.user
 backend/*.suo
 
+# =========================
 # Images uploadées
+# =========================
 backend/images/
 
 # =========================
