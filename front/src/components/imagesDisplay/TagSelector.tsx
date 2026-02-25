@@ -64,15 +64,15 @@ export default function TagSelector({
         className="input tag-search"
       />
 
-        <div
-          ref={listRef}
-          className="tag-list"
-          style={{
-            gap: `${gap}px`,
-            maxHeight: `${maxHeight}px`,
-            "--tag-height": `${rowHeight}px`
-          } as React.CSSProperties}
-        >
+      <div
+        ref={listRef}
+        className="tag-list"
+        style={{
+          gap: `${gap}px`,
+          maxHeight: `${maxHeight}px`,
+          "--tag-height": `${rowHeight}px`
+        } as React.CSSProperties}
+      >
         {sortedTags.map(tag => {
           const selected = selectedTags.includes(tag);
 

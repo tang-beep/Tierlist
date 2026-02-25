@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
+import "./Header.css";
+
 export default function Header() {
   const location = useLocation();
   const [theme, setTheme] = useState<string | null>(null);

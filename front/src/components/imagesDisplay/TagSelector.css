@@ -6,7 +6,7 @@
 /* Input de recherche */
 
 .tag-search {
-  width: 240px;
+  width: 100%;
   margin-bottom: var(--space-md);
 }
 
