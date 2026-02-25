@@ -41,7 +41,7 @@ export default function TierRowDropZone({
       ref={(node) => {
         dropRef(node);
       }}
-      className={`tierlist-row-images ${isOver && canDrop ? "tierlist-row-hover" : ""}`}
+      className={`tierlist-dropzone ${isOver && canDrop ? "tierlist-row-hover" : ""}`}
     >
       {children}
     </div>

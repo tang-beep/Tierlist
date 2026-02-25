@@ -1,58 +1,46 @@
 .tierlist-editor {
-    min-width: 1346px; /* 🔥 beaucoup plus large */
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  /* -------- TABLE -------- */
-  
-  .tierlist-table {
-    margin-top: 20px;
-    width: 100%;
-    border: 2px solid black;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  /* -------- ROW -------- */
-  
-  .tierlist-row {
-    display: flex;
-    width: 100%;
-    border-bottom: 2px solid black;
-    gap: 0px;
-  }
-  
-  .tierlist-row:last-child {
-    border-bottom: none;
-  }
-  
-  /* -------- LABEL -------- */
-  
-  .tierlist-row-label {
-    width: 96px;
-    align-self: stretch;
-  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    font-size: 1.1rem;
-    color: black;
-    border-right: 2px solid black;
-  }
-  
-  /* -------- IMAGES GRID -------- */
-  
-  .tierlist-row-images {
-    flex: 1;
-  
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 96px);
-  
-    /* hauteur mini = 1 image */
-    min-height: 96px;
-  }
+  --tier-image-size: 96px; /* fallback */
+
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* -------- TABLE -------- */
+
+.tierlist-table {
+  margin-top: 20px;
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* -------- ROW -------- */
+
+.tierlist-row {
+  display: flex;
+  width: 100%;
+  border-bottom: 2px solid black;
+}
+
+.tierlist-row:last-child {
+  border-bottom: none;
+}
+
+/* -------- LABEL -------- */
+
+.tierlist-row-label {
+  width: var(--tier-image-size);
+  align-self: stretch;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.1rem;
+  color: black;
+  border-right: 2px solid black;
+}
 
 
 /* -------- ROW MENU -------- */
