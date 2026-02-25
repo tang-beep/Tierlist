@@ -10,6 +10,7 @@ export type TierListImage = {
   imageId: number;
   title: string;
   filePath: string;
+  tag: string;
   tierRowId: string | null;
 };
 

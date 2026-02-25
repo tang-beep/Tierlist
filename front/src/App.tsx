@@ -3,9 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import GalleryPage from "./pages/GalleryPage";
 import TierListCreatePage from "./pages/TierListCreatePage";
 import TierListHomePage from "./pages/TierListHomePage";
-import TierListEditorPage from "./pages/TierListEditorPage";
-import TierListAddImagesPage from "./pages/TierListAddImagesPage";
-import TierListRemoveImagesPage from "./pages/TierListRemoveImagesPage";
+import TierListEditorPage from "./pages/TierListEdition/TierListEditorPage";
+import TierListAddImagesPage from "./pages/TierListEdition/TierListAddImagesPage";
+import TierListRemoveImagesPage from "./pages/TierListEdition/TierListRemoveImagesPage";
 
 import Header from "./components/layout/Header";
 

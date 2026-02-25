@@ -9,14 +9,8 @@ import { useImageSelection } from "../hooks/useImageSelection";
 import { fetchImages } from "../api/images.api";
 import { createTierList } from "../api/tierlists.api";
 
-import type { TierRow } from "../types";
+import type { ImageItem, TierRow } from "../types";
 
-type ImageItem = {
-  id: number;
-  title: string;
-  tag: string;
-  filePath: string;
-};
 
 export default function TierListCreatePage() {
   const navigate = useNavigate();

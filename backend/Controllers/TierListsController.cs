@@ -121,6 +121,7 @@ namespace backend.Controllers
                     ImageId = ti.ImageItem.Id,
                     ti.ImageItem.Title,
                     ti.ImageItem.FilePath,
+                    ti.ImageItem.Tag,
                     ti.TierRowId
                 })
             });

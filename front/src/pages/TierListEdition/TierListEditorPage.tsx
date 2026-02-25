@@ -1,16 +1,16 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import TierImageCard from "../components/tierlist/TierImageCard";
-import TierRowDropZone from "../components/tierlist/TierRowDropZone";
+import TierImageCard from "../../components/tierlist/TierImageCard";
+import TierRowDropZone from "../../components/tierlist/TierRowDropZone";
 import "./TierListEditorPage.css";
 
-import type { TierRow, TierListImage } from "../types";
+import type { TierRow, TierListImage } from "../../types";
 import {
   fetchTierList,
   updateTierListImages,
   updateTierListRows
-} from "../api/tierlists.api";
+} from "../../api/tierlists.api";
 
 export default function TierListEditorPage() {
   const { id } = useParams<{ id: string }>();
@@ -166,13 +166,15 @@ export default function TierListEditorPage() {
       style={{ "--tier-image-size": `${imageSize}px` } as React.CSSProperties}
     >
       <div className="editor-header">
-        <button onClick={saveTierList}>💾 Sauvegarder</button>
-        <button className="danger" onClick={unassignAllImages}>
-          🧹 Tout retirer
+        <button className="btn btn--primary" onClick={saveTierList}>
+          Sauvegarder
+        </button>
+        <button className="btn btn--danger" onClick={unassignAllImages}>
+          Tout retirer
         </button>
       </div>
 
-      <h1>{name}</h1>
+      <div className="title--principal">{name}</div>
 
       <div className="tierlist-table">
         {rows
@@ -210,7 +212,7 @@ export default function TierListEditorPage() {
           ))}
       </div>
 
-      <h3>Images non classées</h3>
+      <div className="title--principal">Images non classées</div>
 
       <TierRowDropZone rowId={null} changeRow={changeRow}>
         {unassignedImages.map((img, index) => (
@@ -227,29 +229,37 @@ export default function TierListEditorPage() {
       </TierRowDropZone>
 
       <div className="tierlist-actions">
-        <button onClick={() => navigate(`/tierlists/${id}/add-images`)}>
-          ➕ Ajouter des images
+        <button 
+          onClick={() => navigate(`/tierlists/${id}/add-images`)}
+          className="btn btn--primary"
+        >
+          Ajouter des images
         </button>
-        <button onClick={() => navigate(`/tierlists/${id}/remove-images`)}>
-          🗑️ Supprimer des images
+        <button 
+          onClick={() => navigate(`/tierlists/${id}/remove-images`)}
+          className="btn btn--primary"
+        >
+          Supprimer des images
         </button>
       </div>
 
       {menuRow && (
         <div className="row-menu-backdrop" onClick={() => setMenuRow(null)}>
           <div className="row-menu" onClick={e => e.stopPropagation()}>
-            <h4>{menuRow.name}</h4>
+          <div className="title--secondary">{menuRow.name}</div>
 
             <div className="row-menu-line">
               <button
+                className="btn btn--primary"
                 onClick={() => {
                   renameRowWithValue(menuRow, renameValue);
                   setMenuRow(null);
                 }}
               >
-                ✏️
+                Renommer
               </button>
               <input
+                className="input"
                 value={renameValue}
                 onChange={e => setRenameValue(e.target.value)}
               />
@@ -257,14 +267,16 @@ export default function TierListEditorPage() {
 
             <div className="row-menu-line">
               <button
+                className="btn btn--primary"
                 onClick={() => {
                   changeRowColorWithValue(menuRow, colorValue);
                   setMenuRow(null);
                 }}
               >
-                🎨
+                Changer Coul.
               </button>
               <input
+                className="input"
                 type="color"
                 value={colorValue}
                 onChange={e => setColorValue(e.target.value)}
@@ -273,14 +285,16 @@ export default function TierListEditorPage() {
 
             <div className="row-menu-line">
               <button
+                className="btn btn--primary"
                 onClick={() => {
                   addRowWithName(menuRow, "above", newRowNameAbove);
                   setMenuRow(null);
                 }}
               >
-                ⬆️
+                Nvlle ligne 🠕
               </button>
               <input
+                className="input"
                 value={newRowNameAbove}
                 onChange={e => setNewRowNameAbove(e.target.value)}
               />
@@ -288,27 +302,29 @@ export default function TierListEditorPage() {
 
             <div className="row-menu-line">
               <button
+                className="btn btn--primary"
                 onClick={() => {
                   addRowWithName(menuRow, "below", newRowNameBelow);
                   setMenuRow(null);
                 }}
               >
-                ⬇️
+                Nvlle ligne 🠗
               </button>
               <input
+                className="input"
                 value={newRowNameBelow}
                 onChange={e => setNewRowNameBelow(e.target.value)}
               />
             </div>
 
             <button
-              className="danger"
+              className="btn btn--danger"
               onClick={() => {
                 deleteRow(menuRow);
                 setMenuRow(null);
               }}
             >
-              🗑️ Supprimer la ligne
+              Supprimer la ligne
             </button>
           </div>
         </div>

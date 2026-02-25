@@ -7,10 +7,8 @@ import { sortSelectedFirst } from "../../utils/sortImages";
 import { paginate } from "../../utils/pagination";
 import { getPageWindow } from "../../utils/pageWindow";
 
-import type { SelectableId } from "../../types";
-
 type GridImage = {
-  id: SelectableId;
+  id: number;
   title: string;
   filePath: string;
 };
@@ -21,11 +19,11 @@ type Props = {
   // Images à afficher
   images: GridImage[];
   // Liste des images selectionnées
-  selectedIds: SelectableId[];
+  selectedIds: number[];
   // Fonction de selection
-  onToggleSelect: (id: SelectableId) => void;
+  onToggleSelect: (id: number) => void;
   // Fonction de supression (optionnelle)
-  onDelete?: (id: SelectableId) => void;
+  onDelete?: (id: number) => void;
 
   // Taille d'une image
   cardSize?: number;

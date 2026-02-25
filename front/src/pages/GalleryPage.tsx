@@ -7,14 +7,7 @@ import "./GalleryPage.css";
 import { useImageSelection } from "../hooks/useImageSelection";
 
 import { fetchImages, deleteImage, deleteImages } from "../api/images.api";
-import type { SelectableId } from "../types";
-
-type ImageItem = {
-  id: number;
-  title: string;
-  tag: string;
-  filePath: string;
-};
+import type { ImageItem } from "../types";
 
 export default function GalleryPage() {
   const [images, setImages] = useState<ImageItem[]>([]);
@@ -56,7 +49,7 @@ export default function GalleryPage() {
     allSelected
   } = useImageSelection(images);
 
-  const handleDeleteImage = async (id: SelectableId) => {
+  const handleDeleteImage = async (id: number) => {
     try {
       await deleteImage(id);
       loadImages();
@@ -75,7 +68,7 @@ export default function GalleryPage() {
     if (!confirmDelete) return;
 
     try {
-      await deleteImages(selectedIds as number[]);
+      await deleteImages(selectedIds);
       loadImages();
     } catch {
       alert("Erreur lors de la suppression des images");
