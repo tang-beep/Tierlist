@@ -61,7 +61,7 @@ export default function TagSelector({
         placeholder="Rechercher un tag..."
         value={search}
         onChange={e => setSearch(e.target.value)}
-        className="tag-search"
+        className="input tag-search"
       />
 
         <div
@@ -92,6 +92,7 @@ export default function TagSelector({
         {rows > 1 && (
           <button
             type="button"
+            className="btn btn--secondary"
             onClick={() => setRows(r => Math.max(1, r - 2))}
           >
             − Less
@@ -99,7 +100,11 @@ export default function TagSelector({
         )}
 
         {canGrow && (
-          <button type="button" onClick={() => setRows(r => r + 2)}>
+          <button 
+            type="button" 
+            className="btn btn--secondary"
+            onClick={() => setRows(r => r + 2)}
+          >
             + More
           </button>
         )}

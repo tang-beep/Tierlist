@@ -105,6 +105,7 @@ export default function ImageGrid({
 
                 {onDelete && (
                   <button
+                    className="btn btn--danger"
                     onClick={e => {
                       e.stopPropagation();
                       onDelete(img.id);
@@ -120,11 +121,19 @@ export default function ImageGrid({
       </div>
 
       <div className="pagination">
-        <button onClick={() => setPage(1)} disabled={page === 1}>
+        <button
+          className="btn btn--secondary"
+          onClick={() => setPage(1)}
+          disabled={page === 1}
+        >
           ⏮
         </button>
 
-        <button onClick={() => setPage(p => Math.max(1, p - 1))}>
+        <button
+          className="btn btn--secondary"
+          onClick={() => setPage(p => Math.max(1, p - 1))}
+          disabled={page === 1}
+        >
           ◀
         </button>
 
@@ -133,7 +142,7 @@ export default function ImageGrid({
         {pages.map(p => (
           <button
             key={p}
-            className={p === page ? "active" : ""}
+            className={`btn btn--secondary ${p === page ? "active" : ""}`}
             onClick={() => setPage(p)}
           >
             {p}
@@ -142,11 +151,16 @@ export default function ImageGrid({
 
         <span className={`dots ${showRightDots ? "visible" : ""}`}>…</span>
 
-        <button onClick={() => setPage(p => Math.min(totalPages, p + 1))}>
+        <button
+          className="btn btn--secondary"
+          onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+          disabled={page === totalPages}
+        >
           ▶
         </button>
 
         <button
+          className="btn btn--secondary"
           onClick={() => setPage(totalPages)}
           disabled={page === totalPages}
         >

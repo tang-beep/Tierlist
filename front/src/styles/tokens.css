@@ -1,5 +1,5 @@
 :root {
-  /* === Theme Clair === */
+  /* === Theme Clair (par defaut) === */
   
   --color-primary: #87B6BC;
   --color-secondary: #BED4CB;
@@ -26,17 +26,11 @@
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 40px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
   }
-  
-/* === Theme Sombre === */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-primary: #1B211A;
-    --color-secondary: #628141;
-    --color-tertiary: #8BAE66;
-    --color-quaternary: #EBD5AB;
-  }
-}
   
 /* === Changements de theme === */
 html[data-theme="light"] {
