@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import PreviewList from "./PreviewList";
 import TagSelector from "../imagesDisplay/TagSelector";
 import "./UploadForm.css";
@@ -20,6 +20,8 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
   // Saisie de nouveaux tags pour les images
   const [tagInput, setTagInput] = useState("");
 
+  // Input des fichiers
+  const fileInputRef = useRef<HTMLInputElement>(null);
   // Fichiers en attente d'upload, affichés en preview
   const [files, setFiles] = useState<File[]>([]);
   // Liste des previews
@@ -161,12 +163,27 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
 
         <div className="form-group">
           <input
-            className="input"
+            ref={fileInputRef}
             type="file"
             accept="image/*"
             multiple
             onChange={e => handleFiles(e.target.files)}
+            className="file-input-hidden"
           />
+
+          <button
+            type="button"
+            className="btn btn--secondary"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            Choisir des images
+          </button>
+
+          {files.length > 0 && (
+            <span className="file-count">
+              {files.length} fichier(s) sélectionné(s)
+            </span>
+          )}
         </div>
 
         <button type="submit" className="btn btn--primary">Envoyer</button>

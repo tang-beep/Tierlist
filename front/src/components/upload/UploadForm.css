@@ -20,6 +20,15 @@
   width: 30rem;
 }
 
+.file-input-hidden {
+  display: none;
+}
+
+.file-count {
+  font-size: var(--text-sm);
+  opacity: 0.8;
+}
+
 /* Largeur spécifique */
 
 .upload-container .input {
