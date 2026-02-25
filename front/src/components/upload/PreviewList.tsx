@@ -21,6 +21,7 @@ export default function PreviewList({ previews, removeImage }: Props) {
           <img
             key={i}
             src={src}
+            alt={`preview-${i}`}
             onClick={() => removeImage(i)}
             className="preview-item"
           />

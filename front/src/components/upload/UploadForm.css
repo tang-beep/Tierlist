@@ -1,30 +1,36 @@
 .upload-container {
-  border: 1px solid #ccc;
-  padding: 20px;
   max-width: 1000px;
-  margin: 0 auto 40px auto;
-  text-align: center;
+  margin: var(--space-xl) auto var(--space-xl) auto;
 }
+
+/* Layout uniquement */
 
 .upload-container form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: var(--space-md);
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 12px;
+  gap: var(--space-xs);
+  width: 30rem;
 }
 
-.form-group input {
-  margin-top: 4px;
-  width: 400px;
-  text-align: center;
+/* Largeur spécifique */
+
+.upload-container .input {
+  width: 100%;
 }
 
-.upload-container .tag-selector{
-  width: 300px;
+.upload-container .tag-selector {
+  width: 20rem;
+}
+
+.upload-message {
+  margin-top: var(--space-sm);
+  font-size: var(--text-sm);
 }

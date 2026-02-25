@@ -1,4 +1,4 @@
-/* Buttons */
+/* === Buttons === */
 
 .btn {
   padding: var(--space-sm) var(--space-md);
@@ -40,7 +40,7 @@
   color: var(--color-primary);
 }
 
-/* Input */
+/* === Input === */
 
 .input {
   padding: var(--space-sm);
@@ -61,11 +61,23 @@
   box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
 }
 
-/* Image Card */
+/* === Image Card === */
 
 .card {
-  background: var(--color-secondary);
-  border-radius: var(--radius-lg);
+  background: transparent;
+  border: 1px solid var(--color-tertiary);
   box-shadow: var(--shadow-sm);
   padding: var(--space-md);
+}
+
+.title--principal {
+  font-weight: 800;
+  font-size: var(--text-xl);
+  color: var(--color-quaternary);
+}
+
+.title--secondary {
+  font-weight: 600;
+  font-size: var(--text-md);
+  color: var(--color-tertiary);
 }

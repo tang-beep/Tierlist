@@ -125,13 +125,14 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
   /* ---------- RENDER ---------- */
 
   return (
-    <div className="upload-container">
-      <h2>Uploader des images</h2>
+    <div className="upload-container card">
+      <div className="title--principal">Uploader des images</div>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Titres (séparés par ,)</label>
           <input
+            className="input"
             value={titlesInput}
             onChange={e => setTitlesInput(e.target.value)}
           />
@@ -140,6 +141,7 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
         <div className="form-group">
           <label>Tags manuels (séparés par ,)</label>
           <input
+            className="input"
             value={tagInput}
             onChange={e => setTagInput(e.target.value)}
           />
@@ -159,6 +161,7 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
 
         <div className="form-group">
           <input
+            className="input"
             type="file"
             accept="image/*"
             multiple
@@ -166,10 +169,14 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
           />
         </div>
 
-        <button type="submit">Envoyer</button>
+        <button type="submit" className="btn btn--primary">Envoyer</button>
 
         {files.length > 0 && (
-          <button type="button" onClick={clearAll}>
+          <button 
+            type="button" 
+            onClick={clearAll}
+            className="btn btn--secondary"
+          >
             Tout enlever
           </button>
         )}
