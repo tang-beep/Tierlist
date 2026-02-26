@@ -84,9 +84,10 @@ namespace backend.Controllers
                 {
                     t.Id,
                     t.Name,
-                    t.CreatedAt
+                    t.CreatedAt,
+                    t.UpdatedAt
                 })
-                .OrderByDescending(t => t.CreatedAt)
+                .OrderByDescending(t => t.UpdatedAt)
                 .ToList();
 
             return Ok(lists);
@@ -141,8 +142,9 @@ namespace backend.Controllers
                 image.Order = imgDto.Order;
             }
 
+            await UpdateLastModified(tierListId);
             await _context.SaveChangesAsync();
-            return Ok();
+            return NoContent();
         }
 
         [HttpPost("{tierListId}/images")]
@@ -164,6 +166,7 @@ namespace backend.Controllers
                 });
             }
 
+            await UpdateLastModified(tierListId);
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -177,9 +180,9 @@ namespace backend.Controllers
                     dto.TierListImageIds.Contains(t.Id))
                 .ToListAsync();
 
+            await UpdateLastModified(tierListId);
             _context.TierImages.RemoveRange(images);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
@@ -204,8 +207,16 @@ namespace backend.Controllers
                 });
             }
 
+            await UpdateLastModified(tierListId);
             await _context.SaveChangesAsync();
-            return Ok();
+            return NoContent();
+        }
+
+        private async Task UpdateLastModified(Guid tierListId)
+        {
+            var tierList = await _context.TierLists.FindAsync(tierListId);
+            if (tierList != null)
+                tierList.UpdatedAt = DateTime.UtcNow;
         }
     }
 }

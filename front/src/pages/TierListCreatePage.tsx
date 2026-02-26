@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "./TierListCreatePage.css";
 import TagSelector from "../components/imagesDisplay/TagSelector";
 import ImageGrid from "../components/imagesDisplay/ImageGrid";
@@ -27,8 +28,6 @@ export default function TierListCreatePage() {
     { id: crypto.randomUUID(), name: "B", color: "#8ac926", order: 2 }
   ]);
   
-
-
   const loadImages = async () => {
     setLoading(true);
     setError(null);
@@ -121,38 +120,40 @@ export default function TierListCreatePage() {
         .map((r, index) => ({ ...r, order: index }))
     );
   };
-  
-
 
   if (loading) return <h2>Chargement...</h2>;
 
   return (
     <div className="tierlist-create-page">
-      <h1>Créer une tierlist</h1>
+      <div className="tierlist-create-header">
+        <div className="title--principal">Créer une tierlist</div>
 
-      <input
-        className="tierlist-name-input"
-        placeholder="Nom de la tierlist"
-        value={tierListName}
-        onChange={e => setTierListName(e.target.value)}
-      />
+        <input
+          className="input"
+          placeholder="Nom de la tierlist"
+          value={tierListName}
+          onChange={e => setTierListName(e.target.value)}
+        />
+      </div>
 
-      <TagSelector
-        availableTags={availableTags}
-        selectedTags={selectedTags}
-        onToggleTag={toggleTag}
-      />
+      <div className="tierlist-create-tags">
+        <TagSelector
+          availableTags={availableTags}
+          selectedTags={selectedTags}
+          onToggleTag={toggleTag}
+        />
 
-      <div className="tierlist-tag-actions">
-        <button onClick={toggleFilterMode}>
-          {filterMode === "optional"
-            ? "Mode : au moins un tag"
-            : "Mode : tous les tags"}
-        </button>
+        <div className="tierlist-create-tag-controls">
+          <button className="btn btn--secondary" onClick={toggleFilterMode}>
+            {filterMode === "optional"
+              ? "Mode : au moins un tag"
+              : "Mode : tous les tags"}
+          </button>
 
-        <button onClick={toggleAll}>
-          {allSelected ? "Désélectionner tout" : "Sélectionner tout"}
-        </button>
+          <button className="btn btn--secondary" onClick={toggleAll}>
+            {allSelected ? "Désélectionner tout" : "Sélectionner tout"}
+          </button>
+        </div>
       </div>
 
       <ImageGrid
@@ -163,58 +164,58 @@ export default function TierListCreatePage() {
         cardSize={120}
       />
 
-      <h3>Catégories</h3>
+      <div className="tierlist-create-categories">
+        <div className="title--secondary">Catégories</div>
 
-      <div className="create-tierlist-rows">
-        {rows.map(row => (
-          <div key={row.id} className="create-tierlist-row">
-            <input
-              value={row.name}
-              onChange={e =>
-                setRows(prev =>
-                  prev.map(r =>
-                    r.id === row.id ? { ...r, name: e.target.value } : r
+        <div className="tierlist-create-rows">
+          {rows.map(row => (
+            <div key={row.id} className="tierlist-create-row">
+              <input
+                className="input"
+                value={row.name}
+                onChange={e =>
+                  setRows(prev =>
+                    prev.map(r =>
+                      r.id === row.id ? { ...r, name: e.target.value } : r
+                    )
                   )
-                )
-              }
-            />
+                }
+              />
 
-            <input
-              type="color"
-              value={row.color}
-              onChange={e =>
-                setRows(prev =>
-                  prev.map(r =>
-                    r.id === row.id ? { ...r, color: e.target.value } : r
+              <input
+                className="input"
+                type="color"
+                value={row.color}
+                onChange={e =>
+                  setRows(prev =>
+                    prev.map(r =>
+                      r.id === row.id ? { ...r, color: e.target.value } : r
+                    )
                   )
-                )
-              }
-            />
+                }
+              />
 
-            <button
-              className="remove-row-btn"
-              disabled={rows.length <= 1}
-              onClick={() => removeRow(row.id)}
-              title="Supprimer la catégorie"
-            >
-              ✖
-            </button>
-          </div>
-        ))}
+              <button
+                className="btn btn--danger"
+                disabled={rows.length <= 1}
+                onClick={() => removeRow(row.id)}
+              >
+                ✖
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <button className="btn btn--secondary" onClick={addRow}>
+          Ajouter une catégorie
+        </button>
+
+        <button className="btn btn--primary" onClick={handleCreateTierList}>
+          Créer la tierlist
+        </button>
+
+        {error && <div className="tierlist-create-error">{error}</div>}
       </div>
-
-      <button
-        className="tierlist-add-row"
-        onClick={addRow}
-      >
-        ➕ Ajouter une catégorie
-      </button>
-
-      {error && <p className="error">{error}</p>}
-
-      <button className="tierlist-create-btn" onClick={handleCreateTierList}>
-        Créer la tierlist
-      </button>
     </div>
   );
 }

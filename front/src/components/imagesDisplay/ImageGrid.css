@@ -2,7 +2,6 @@
   display: grid;
   justify-content: start;
   align-content: start;
-  margin: var(--space-lg) auto;
 }
 
 /* === Pagination === */
@@ -12,15 +11,14 @@
   gap: var(--space-sm);
   justify-content: center;
   align-items: center;
-  margin-bottom: var(--space-xl);
 }
 
 /* Les boutons pagination utilisent .btn */
 /* On ajoute juste une taille compacte */
 
 .pagination .btn {
-  width: 36px;
-  height: 36px;
+  width: 2.5rem;
+  height: 2.5rem;
   padding: 0;
 
   display: flex;
