@@ -83,36 +83,37 @@ export default function GalleryPage() {
 
       <div className="title--principal">Liste des images</div>
 
-      <TagSelector
-        availableTags={availableTags}
-        selectedTags={selectedTags}
-        onToggleTag={toggleTag}
-      />
-
       <div className="gallery-actions">
-        <button
-          className="btn btn--secondary"
-          onClick={toggleFilterMode}
-        >
-          {filterMode === "optional"
-            ? "Mode : au moins un tag"
-            : "Mode : tous les tags"}
-        </button>
+        <TagSelector
+          availableTags={availableTags}
+          selectedTags={selectedTags}
+          onToggleTag={toggleTag}
+        />
+        <div className="gallery-select-btns">
+          <button
+            className="btn btn--secondary"
+            onClick={toggleFilterMode}
+          >
+            {filterMode === "optional"
+              ? "Mode : au moins un tag"
+              : "Mode : tous les tags"}
+          </button>
 
-        <button
-          className="btn btn--secondary"
-          onClick={toggleAll}
-        >
-          {allSelected ? "Tout désélectionner" : "Tout sélectionner"}
-        </button>
+          <button
+            className="btn btn--secondary"
+            onClick={toggleAll}
+          >
+            {allSelected ? "Tout désélectionner" : "Tout sélectionner"}
+          </button>
 
-        <button
-          className="btn btn--danger"
-          onClick={deleteSelectedImages}
-          disabled={selectedIds.length === 0}
-        >
-          Supprimer la sélection
-        </button>
+          <button
+            className="btn btn--danger"
+            onClick={deleteSelectedImages}
+            disabled={selectedIds.length === 0}
+          >
+            Supprimer la sélection
+          </button>
+        </div>
       </div>
 
       {error && <p className="error">{error}</p>}

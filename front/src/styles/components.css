@@ -8,9 +8,7 @@
   font-weight: 500;
   font-size: var(--text-md);
 
-  transition:
-    background var(--transition-fast),
-    opacity var(--transition-fast);
+  transition: opacity var(--transition-fast);
 }
 
 .btn:disabled {
@@ -19,7 +17,7 @@
 }
 
 .btn:not(:disabled):hover {
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 /* Primary */
@@ -30,8 +28,9 @@
 
 /* Secondary */
 .btn--secondary {
-  background: var(--color-secondary);
+  background: transparent;
   color: var(--color-tertiary);
+  border: 0.1rem solid var(--color-tertiary);
 }
 
 /* Danger */
@@ -44,7 +43,7 @@
 
 .input {
   padding: var(--space-sm);
-  border-radius: var(--radius-sm);
+  border-radius: 0;
   border: 1px solid var(--color-tertiary);
   background: transparent;
   color: var(--color-tertiary);
@@ -58,7 +57,6 @@
 .input:focus {
   outline: none;
   border-color: var(--color-quaternary);
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
 }
 
 /* === Image Card === */

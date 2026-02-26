@@ -173,7 +173,7 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
 
           <button
             type="button"
-            className="btn btn--secondary"
+            className="btn btn--primary"
             onClick={() => fileInputRef.current?.click()}
           >
             Choisir des images
