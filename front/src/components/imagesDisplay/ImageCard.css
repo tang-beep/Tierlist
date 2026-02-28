@@ -4,7 +4,7 @@
   aspect-ratio: 1 / 1;
 
   border-radius: var(--radius-md);
-  border: 1px solid var(--color-tertiary);
+  border: 0.1rem solid var(--color-tertiary);
   background: var(--color-primary);
 
   overflow: hidden;
@@ -17,13 +17,13 @@
 }
 
 .image-card:hover {
-  transform: translateY(-1px);
+  transform: translateY(-0.1rem);
   box-shadow: var(--shadow-sm);
 }
 
 .image-card.selected {
   border-color: var(--color-quaternary);
-  box-shadow: 0 0 0 2px var(--color-quaternary);
+  box-shadow: 0 0 0 0.2rem var(--color-quaternary);
 }
 
 .image-card img {

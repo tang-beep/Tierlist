@@ -15,7 +15,7 @@
   --text-xl: 1.8rem;
   
   /* Ombre */
-  --shadow-sm: 0 2px 6px rgba(0,0,0,0.08);
+  --shadow-sm: 0 0.2rem 0.4rem rgba(0,0,0,0.08);
   
   /* Radius */
   --radius-sm: 0.3rem;

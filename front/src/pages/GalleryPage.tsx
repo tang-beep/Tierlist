@@ -124,8 +124,6 @@ export default function GalleryPage() {
         onToggleSelect={toggle}
         onDelete={handleDeleteImage}
         rows={8}
-        cardSize={120}
-        gap={8}
       />
     </div>
   );

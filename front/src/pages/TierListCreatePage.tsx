@@ -161,7 +161,6 @@ export default function TierListCreatePage() {
         selectedIds={selectedIds}
         onToggleSelect={toggle}
         rows={5}
-        cardSize={120}
       />
 
       <div className="tierlist-create-categories">

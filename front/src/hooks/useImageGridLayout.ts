@@ -24,7 +24,12 @@ export function useImageGridLayout({
       // Protéger pour le premier render
       if (!containerRef.current) return;
 
-      const width = containerRef.current.offsetWidth;
+      // Taille d'un rem
+      const rootFontSize = parseFloat(
+        getComputedStyle(document.documentElement).fontSize
+      );
+
+      const width = containerRef.current.offsetWidth / rootFontSize;
       // On calcule le nombre d'images qui peuvent passer sur une ligne en 
       // fonction de la place dispo, de la taille des images et de l'espacement
       const cols = Math.max(1, Math.floor((width + gap) / (cardSize + gap)));
@@ -38,15 +43,10 @@ export function useImageGridLayout({
     return () => window.removeEventListener("resize", compute);
   }, [rows, cardSize, gap]);
 
-  const gridHeight =
-    rows * cardSize + (rows - 1) * gap;
-
   return {
     // Conteneur du DOM
     containerRef,
     // Nombre d'images par page
-    pageSize,
-    // Hauteur de la grille
-    gridHeight
+    pageSize
   };
 }

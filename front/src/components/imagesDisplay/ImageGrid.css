@@ -1,7 +1,5 @@
 .image-grid {
   display: grid;
-  justify-content: start;
-  align-content: start;
 }
 
 /* === Pagination === */

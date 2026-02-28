@@ -13,8 +13,7 @@ type GridImage = {
   filePath: string;
 };
 
-// Pour définir la largeur de l'ImageGrid, le faire dans le css du composant parent, 
-// puis regler la hauteur avec le nombre de lignes
+// Définir la hauteur de l'ImageGrid avec le nombre de lignes
 type Props = {
   // Images à afficher
   images: GridImage[];
@@ -25,9 +24,9 @@ type Props = {
   // Fonction de supression (optionnelle)
   onDelete?: (id: number) => void;
 
-  // Taille d'une image
+  // Taille d'une image en rem
   cardSize?: number;
-  // Espacement des images
+  // Espacement des images en rem
   gap?: number;
   // Nombres de lignes par page
   rows?: number;
@@ -42,8 +41,8 @@ export default function ImageGrid({
   onToggleSelect,
   onDelete, 
   
-  cardSize = 120,
-  gap = 10,
+  cardSize = 8,
+  gap = 0.4,
   rows = 3,
   emptyLabel = "Aucune Image"
 }: Props) {
@@ -51,7 +50,7 @@ export default function ImageGrid({
   const [page, setPage] = useState(1);
   
   // Calcul du nombre d'images par page et de la hauteur de la grille
-  const { containerRef, pageSize, gridHeight } = useImageGridLayout({ rows, cardSize, gap });
+  const { containerRef, pageSize } = useImageGridLayout({ rows, cardSize, gap });
 
   // Organise les images pour mettre les selectionnées en premier
   const sortedImages = useMemo(
@@ -82,9 +81,8 @@ export default function ImageGrid({
         ref={containerRef}
         className="image-grid"
         style={{
-          gap: `${gap}px`,
-          gridTemplateColumns: `repeat(auto-fill, minmax(${cardSize}px, 1fr))`,
-          height: `${gridHeight}px`
+          gap: `${gap}rem`,
+          gridTemplateColumns: `repeat(auto-fill, minmax(${cardSize}rem, 1fr))`
         }}
       >
         {pagedItems.map(img => {
