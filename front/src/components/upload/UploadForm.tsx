@@ -161,7 +161,7 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
           }
         />
 
-        <div className="form-group">
+        <div className="form-btns">
           <input
             ref={fileInputRef}
             type="file"
@@ -180,26 +180,29 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
           </button>
 
           {files.length > 0 && (
-            <span className="file-count">
+            <div className="file-count">
               {files.length} fichier(s) sélectionné(s)
-            </span>
+            </div>
           )}
         </div>
+        <div className="form-btns">
 
-        <button type="submit" className="btn btn--primary">Envoyer</button>
+          <button type="submit" className="btn btn--primary">Envoyer</button>
 
+          {message && <div className="upload-message">{message}</div>}
+          
+        </div>
+        
         {files.length > 0 && (
           <button 
-            type="button" 
-            onClick={clearAll}
-            className="btn btn--secondary"
+          type="button" 
+          onClick={clearAll}
+          className="btn btn--danger"
           >
             Tout enlever
           </button>
         )}
       </form>
-
-      {message && <p className="upload-message">{message}</p>}
 
       <PreviewList previews={previews} removeImage={removeImage} />
     </div>

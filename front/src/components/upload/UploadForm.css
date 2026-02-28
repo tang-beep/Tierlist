@@ -1,6 +1,9 @@
 .upload-container {
+  display: flex;
+  flex-direction: column;
   margin: auto;
   width: 50rem;
+  gap: var(--space-sm);
 }
 
 /* Layout uniquement */
@@ -24,6 +27,14 @@
   display: none;
 }
 
+.form-btns{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
 .file-count {
   font-size: var(--text-sm);
   opacity: 0.8;
@@ -40,6 +51,5 @@
 }
 
 .upload-message {
-  margin-top: var(--space-sm);
   font-size: var(--text-sm);
 }
