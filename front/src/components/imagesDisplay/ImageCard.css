@@ -3,16 +3,27 @@
   width: 100%;
   aspect-ratio: 1 / 1;
 
-  border-radius: 10px;
-  border: 1px solid #ccc;
+  border-radius: var(--radius-md);
+  border: 0.1rem solid var(--color-tertiary);
+  background: var(--color-primary);
+
   overflow: hidden;
-  background: #111;
   cursor: pointer;
+
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.image-card:hover {
+  transform: translateY(-0.1rem);
+  box-shadow: var(--shadow-sm);
 }
 
 .image-card.selected {
-  outline: 3px solid #646cff;
-  outline-offset: -3px;
+  border-color: var(--color-quaternary);
+  box-shadow: 0 0 0 0.07rem var(--color-quaternary);
 }
 
 .image-card img {
@@ -21,38 +32,41 @@
   object-fit: contain;
 }
 
+/* Overlay */
+
 .image-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.65);
-  color: white;
+
+  background: var(--neutral-background); 
+  color: var(--color-tertiary);
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  padding: 8%;
-  gap: 0.6em;
+  padding: var(--space-md);
+  gap: var(--space-sm);
 
   opacity: 0;
-  transition: opacity .25s ease;
-}
-
-.image-overlay h3 {
-  font-size: clamp(0.65rem, 1.8vw, 0.95rem);
-  text-align: center;
-  line-height: 1.2;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* max 3 lignes */
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-
-  margin: 0;
+  transition: opacity var(--transition-fast);
 }
 
 .image-card:hover .image-overlay {
   opacity: 1;
+}
+
+.image-overlay h3 {
+  font-size: clamp(0.7rem, 1.6vw, 0.95rem);
+  text-align: center;
+  line-height: 1.2;
+
+  margin: 0;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

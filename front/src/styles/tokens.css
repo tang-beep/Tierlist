@@ -1,0 +1,51 @@
+:root {
+  /* === Theme Clair (par defaut) === */
+  
+  --color-primary: #896C6C;
+  --color-secondary: #E5BEB5;
+  --color-tertiary: #EEE6CA;
+  --color-quaternary: #d68f8f;
+
+  --neutral-background: rgba(0, 0, 0, 0.55);
+  
+  /* Taille des textes */
+  --text-sm: 0.85rem;
+  --text-md: 1rem;
+  --text-lg: 1.4rem;
+  --text-xl: 1.8rem;
+  
+  /* Ombre */
+  --shadow-sm: 0 0.2rem 0.4rem rgba(0,0,0,0.08);
+  
+  /* Radius */
+  --radius-sm: 0.3rem;
+  --radius-md: 0.6rem;
+  --radius-lg: 1.5rem;
+  
+  /* Espacements */
+  --space-xs: 0.3rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.8rem;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  }
+  
+/* === Changements de theme === */
+html[data-theme="light"] {
+  --color-primary: #896C6C;
+  --color-secondary: #E5BEB5;
+  --color-tertiary: #EEE6CA;
+  --color-quaternary: #d68f8f;
+}
+  
+html[data-theme="dark"] {
+  --color-primary: #1B211A;
+  --color-secondary: #628141;
+  --color-tertiary: #8BAE66;
+  --color-quaternary: #EBD5AB;
+}
+  

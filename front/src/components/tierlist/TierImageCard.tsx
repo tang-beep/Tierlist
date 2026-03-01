@@ -67,10 +67,7 @@ export default function TierImageCard({
   drag(drop(ref));
 
   return (
-    <div
-      ref={ref}
-      className="tierlist-image-wrapper"
-    >
+    <div ref={ref} className="tierlist-image-wrapper">
       <img src={filePath} alt={title} />
       <div className="tierlist-image-overlay">{title}</div>
     </div>

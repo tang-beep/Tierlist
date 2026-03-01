@@ -1,13 +1,11 @@
-import type { SelectableId } from "../types";
-
 /* Fonction qui permet de réorganiser une liste d'images
 en mettant les selectionnées en premier */
 
-export function sortSelectedFirst<T extends { id: SelectableId }>(
+export function sortSelectedFirst<T extends { id: number }>(
   // Images a reorganiser
   images: T[],
   // Id des images selectionnees
-  selectedIds: SelectableId[]
+  selectedIds: number[]
 ) {
   const selectedSet = new Set(selectedIds);
 

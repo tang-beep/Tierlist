@@ -7,25 +7,17 @@ import "./GalleryPage.css";
 import { useImageSelection } from "../hooks/useImageSelection";
 
 import { fetchImages, deleteImage, deleteImages } from "../api/images.api";
-import type { SelectableId } from "../types";
-
-type ImageItem = {
-  id: number;
-  title: string;
-  tag: string;
-  filePath: string;
-};
+import type { ImageItem } from "../types";
 
 export default function GalleryPage() {
   const [images, setImages] = useState<ImageItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-
   const loadImages = async () => {
     setLoading(true);
     setError(null);
-  
+
     try {
       const data = await fetchImages();
       setImages(data);
@@ -39,12 +31,10 @@ export default function GalleryPage() {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
     loadImages();
   }, []);
-
 
   const {
     availableTags,
@@ -58,73 +48,72 @@ export default function GalleryPage() {
     toggleAll,
     allSelected
   } = useImageSelection(images);
-  
 
-  const handleDeleteImage = async (id: SelectableId) => {
+  const handleDeleteImage = async (id: number) => {
     try {
       await deleteImage(id);
       loadImages();
-    } catch (err) {
+    } catch {
       alert("Erreur lors de la suppression");
     }
   };
-  
 
   const deleteSelectedImages = async () => {
     if (selectedIds.length === 0) return;
-  
+
     const confirmDelete = window.confirm(
       `Supprimer ${selectedIds.length} image(s) ?`
     );
 
-    const tierListImageIds = selectedIds as number[];
-
     if (!confirmDelete) return;
-  
+
     try {
-      await deleteImages(tierListImageIds);
+      await deleteImages(selectedIds);
       loadImages();
     } catch {
       alert("Erreur lors de la suppression des images");
     }
   };
-  
 
-
-  if (loading) return <h2>Chargement...</h2>;
+  if (loading) return <h2 className="title--secondary">Chargement...</h2>;
 
   return (
     <div className="gallery-page">
       <UploadForm onUploaded={loadImages} availableTags={availableTags} />
 
-      <h1>Liste des images</h1>
-
-      <TagSelector
-        availableTags={availableTags}
-        selectedTags={selectedTags}
-        onToggleTag={toggleTag}
-      />
+      <div className="title--principal">Liste des images</div>
 
       <div className="gallery-actions">
-        <button
-          className="tag-mode-toggle"
-          onClick={toggleFilterMode}
-        >
-          {filterMode === "optional"
-            ? "Mode : au moins un tag"
-            : "Mode : tous les tags"}
-        </button>
+        <TagSelector
+          availableTags={availableTags}
+          selectedTags={selectedTags}
+          onToggleTag={toggleTag}
+        />
+        <div className="gallery-select-btns">
+          <button
+            className="btn btn--secondary"
+            onClick={toggleFilterMode}
+          >
+            {filterMode === "optional"
+              ? "Mode : au moins un tag"
+              : "Mode : tous les tags"}
+          </button>
 
-        <button onClick={toggleAll}>
-          {allSelected ? "Tout désélectionner" : "Tout sélectionner"}
-        </button>
+          <button
+            className="btn btn--secondary"
+            onClick={toggleAll}
+          >
+            {allSelected ? "Tout désélectionner" : "Tout sélectionner"}
+          </button>
 
-        <button
-          onClick={deleteSelectedImages}
-          disabled={selectedIds.length === 0}
-        >
-          Supprimer la sélection
-        </button>
+          <button
+            className="btn btn--danger"
+            onClick={deleteSelectedImages}
+            disabled={selectedIds.length === 0}
+          >
+            Supprimer la sélection
+          </button>
+        </div>
       </div>
 
       {error && <p className="error">{error}</p>}
@@ -135,8 +124,6 @@ export default function GalleryPage() {
         onToggleSelect={toggle}
         onDelete={handleDeleteImage}
         rows={8}
-        cardSize={120}
-        gap={8}
       />
     </div>
   );

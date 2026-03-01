@@ -30,7 +30,7 @@ export function addImagesToTierList(id: string, imageIds: number[]) {
 }
 
 /* Supprime des images d'une tierlist */
-export function removeImagesFromTierList(id: string, tierListImageIds: number[]) {
+export function removeImagesFromTierList(id: string, tierListImageIds: string[]) {
   return http<void>(`/TierLists/${id}/images`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },

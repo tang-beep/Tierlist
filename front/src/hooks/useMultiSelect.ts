@@ -1,15 +1,13 @@
 import { useState, useMemo } from "react";
 
-import type { SelectableId } from "../types";
-
 /* Hook qui permet de gérer la selection d'images */
 
-export function useMultiSelect<T extends { id: SelectableId }>(filteredItems: T[]) {
+export function useMultiSelect<T extends { id: number }>(filteredItems: T[]) {
 
-  const [selectedIds, setSelectedIds] = useState<SelectableId[]>([]);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   // Quand on clique sur une image pour la selectionner / déselectionner
-  const toggle = (id: SelectableId) => {
+  const toggle = (id: number) => {
     setSelectedIds(prev =>
       prev.includes(id)
         ? prev.filter(i => i !== id)

@@ -1,5 +1,5 @@
 import { http, BASE_URL } from "./http";
-import type { ImageItem, SelectableId } from "../types";
+import type { ImageItem } from "../types";
 
 /* Récupère toutes les images */
 export function fetchImages() {
@@ -7,7 +7,7 @@ export function fetchImages() {
 }
 
 /* Supprime une image */
-export function deleteImage(id: SelectableId) {
+export function deleteImage(id: number) {
   return http<void>(`/Images/${id}`, {
     method: "DELETE"
   });

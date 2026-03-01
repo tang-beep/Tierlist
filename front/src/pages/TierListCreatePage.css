@@ -1,91 +1,66 @@
 .tierlist-create-page {
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .tierlist-create-page h3 {
-    margin-top: 30px;
-  }
-  
-  .tierlist-tag-actions {
-    margin: 15px 0;
-  }
-  
-  .tierlist-tag-actions button {
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    background: #444;
-    color: white;
-  }
-  
-  .tierlist-tag-actions button:hover {
-    background: #666;
-  }
-  
-  .create-tierlist-rows {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .create-tierlist-row {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .create-tierlist-row input[type="text"] {
-    width: 200px;
-    padding: 6px;
-  }
-  
-  .create-tierlist-row input[type="color"] {
-    width: 40px;
-    height: 40px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .tierlist-add-row {
-    margin-top: 15px;
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: none;
-    background: #555;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .tierlist-add-row:hover {
-    background: #777;
-  }
-  
-  .tierlist-selected-count {
-    margin-top: 30px;
-    font-weight: bold;
-  }
-  
-  .remove-row-btn {
-    background: #c0392b;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
 
-  }
-  
-  .remove-row-btn:hover:not(:disabled) {
-    background: #e74c3c;
-  }
-  
-  .remove-row-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
+.tierlist-create-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  width: 28rem;
+}
+
+.tierlist-create-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.tierlist-create-select-btns{
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 17rem;
+}
+
+
+.tierlist-create-categories {
+  width: 36rem;
+  margin: 0 auto;
+  align-items: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.tierlist-create-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+  width: 100%;
+}
+
+.tierlist-create-row {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  width: 100%;
+}
+
+.tierlist-create-row .cat-input{
+  width: 100%;
+}
+
+.tierlist-create-error {
+  color: var(--color-quaternary);
+  font-size: var(--text-sm);
+}
+
+.tierlist-create-page .tag-selector {
+  width: 32rem;
+}

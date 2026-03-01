@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import PreviewList from "./PreviewList";
 import TagSelector from "../imagesDisplay/TagSelector";
 import "./UploadForm.css";
@@ -20,6 +20,8 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
   // Saisie de nouveaux tags pour les images
   const [tagInput, setTagInput] = useState("");
 
+  // Input des fichiers
+  const fileInputRef = useRef<HTMLInputElement>(null);
   // Fichiers en attente d'upload, affichés en preview
   const [files, setFiles] = useState<File[]>([]);
   // Liste des previews
@@ -125,13 +127,14 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
   /* ---------- RENDER ---------- */
 
   return (
-    <div className="upload-container">
-      <h2>Uploader des images</h2>
+    <div className="upload-container card">
+      <div className="title--principal">Uploader des images</div>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Titres (séparés par ,)</label>
           <input
+            className="input"
             value={titlesInput}
             onChange={e => setTitlesInput(e.target.value)}
           />
@@ -140,6 +143,7 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
         <div className="form-group">
           <label>Tags manuels (séparés par ,)</label>
           <input
+            className="input"
             value={tagInput}
             onChange={e => setTagInput(e.target.value)}
           />
@@ -157,25 +161,48 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
           }
         />
 
-        <div className="form-group">
+        <div className="form-btns">
           <input
+            ref={fileInputRef}
             type="file"
             accept="image/*"
             multiple
             onChange={e => handleFiles(e.target.files)}
+            className="file-input-hidden"
           />
+
+          <button
+            type="button"
+            className="btn btn--primary"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            Choisir des images
+          </button>
+
+          {files.length > 0 && (
+            <div className="file-count">
+              {files.length} fichier(s) sélectionné(s)
+            </div>
+          )}
         </div>
+        <div className="form-btns">
 
-        <button type="submit">Envoyer</button>
+          <button type="submit" className="btn btn--primary">Envoyer</button>
 
+          {message && <div className="upload-message">{message}</div>}
+          
+        </div>
+        
         {files.length > 0 && (
-          <button type="button" onClick={clearAll}>
+          <button 
+          type="button" 
+          onClick={clearAll}
+          className="btn btn--danger"
+          >
             Tout enlever
           </button>
         )}
       </form>
-
-      {message && <p className="upload-message">{message}</p>}
 
       <PreviewList previews={previews} removeImage={removeImage} />
     </div>

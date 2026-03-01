@@ -15,12 +15,13 @@ export default function PreviewList({ previews, removeImage }: Props) {
 
   return (
     <>
-      <h4>Prévisualisation</h4>
+      <div className="title--secondary">Prévisualisation</div>
       <div className="preview-list">
         {previews.map((src, i) => (
           <img
             key={i}
             src={src}
+            alt={`preview-${i}`}
             onClick={() => removeImage(i)}
             className="preview-item"
           />

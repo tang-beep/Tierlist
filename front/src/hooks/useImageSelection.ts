@@ -3,8 +3,6 @@ import { useImageTags } from "./useImageTags";
 import { useTagFilter } from "./useTagFilter";
 import { useMultiSelect } from "./useMultiSelect";
 
-import type { SelectableId } from "../types";
-
 /* Hook orchestrateur qui rassemble plusieurs hooks pour gérer toute
 la logique de sélection des images et de filtrage par tag */
 
@@ -14,7 +12,7 @@ type FilterMode = "optional" | "required";
 
 export function useImageSelection<
   // On s'assure que les images ont un id et un (des) tag(s)
-  T extends { id: SelectableId; tag: string }
+  T extends { id: number; tag: string }
 >(images: T[]) {
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -56,12 +54,8 @@ export function useImageSelection<
 
   // Quand la liste de tags change, on recalcule les tags selectionnés
   // au cas ou un tag a ete supprime
-  useEffect(() => {
-    setSelectedTags(prev =>
-      prev.filter(tag =>
-        availableTags.includes(tag)
-      )
-    );
+  useEffect(() => {setSelectedTags(prev =>
+    prev.filter(tag => availableTags.includes(tag)));
   }, [availableTags]);
 
   // On s'assure que les images selectionnées seront toujours

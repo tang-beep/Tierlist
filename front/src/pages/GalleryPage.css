@@ -1,9 +1,32 @@
-#root {
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
-  
-.image-grid {
-  width: 1810px;
+.gallery-page {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* Actions */
+.gallery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.gallery-select-btns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 17rem;
+}
+
+/* Messages */
+.error {
+  color: var(--color-quaternary);
+  font-size: var(--text-md);
+}
+
+
+.gallery-page .tag-selector {
+  width: 35rem;
 }

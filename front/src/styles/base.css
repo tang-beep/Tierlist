@@ -1,0 +1,28 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  
+  background: var(--color-primary);
+  color: var(--color-tertiary);
+}
+
+/* Classe temporaire
+!!! bien changer aussi le temps de transition dans la fonction de 
+changement de theme du Header si changement ici */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition:
+    background-color 2s ease,
+    color 2s ease,
+    border-color 2s ease !important;
+}
+
+

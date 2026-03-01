@@ -1,0 +1,98 @@
+.tierlist-editor {
+  --tier-image-size: 6rem; /* fallback */
+
+  margin: 0 auto;
+  padding: var(--space-lg);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* Boutons en haut */
+.editor-header {
+  display: flex;
+  gap: var(--space-md);
+}
+
+/* Table */
+.tierlist-table {
+  width: 100%;
+
+  border: 0.15rem solid var(--color-tertiary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Rows */
+.tierlist-row {
+  display: flex;
+  width: 100%;
+  border-bottom: 0.1rem solid var(--color-tertiary);
+}
+
+.tierlist-row:last-child {
+  border-bottom: none;
+}
+
+/* Labels */
+.tierlist-row-label {
+  width: var(--tier-image-size);
+  align-self: stretch;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: var(--text-md);
+  font-weight: 600;
+
+  color: var(--color-primary);
+  border-right: 0.1rem solid var(--color-tertiary);
+
+  cursor: pointer;
+}
+
+/* Boutons en bas */
+.tierlist-actions {
+  display: flex;
+  gap: var(--space-md);
+}
+
+
+/* Menu des rows */
+.row-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--neutral-background);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 50;
+}
+
+.row-menu {
+  background: var(--color-primary);
+
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  width: 25rem;
+
+  box-shadow: var(--shadow-sm);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.row-menu-line {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.row-menu-line button {
+  width: 8rem;
+  font-size: var(--text-sm);
+}
