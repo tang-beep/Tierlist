@@ -68,28 +68,30 @@ export default function TierListAddOrRemovePage<T extends BaseGridImage<any>>(
         </button>
       </div>
 
-      <TagSelector
-        availableTags={availableTags}
-        selectedTags={selectedTags}
-        onToggleTag={toggleTag}
-      />
+      <div className="tierlist-addremove-tags">
+        <TagSelector
+          availableTags={availableTags}
+          selectedTags={selectedTags}
+          onToggleTag={toggleTag}
+        />
 
-      <div className="page-actions">
-        <button
-          className="btn btn--secondary"
-          onClick={toggleFilterMode}
-        >
-          {filterMode === "optional"
-            ? "Mode : au moins un tag"
-            : "Mode : tous les tags"}
-        </button>
+        <div className="tierlist-addremove-select-btns">
+          <button
+            className="btn btn--secondary"
+            onClick={toggleFilterMode}
+          >
+            {filterMode === "optional"
+              ? "Mode : au moins un tag"
+              : "Mode : tous les tags"}
+          </button>
 
-        <button
-          className="btn btn--secondary"
-          onClick={toggleAll}
-        >
-          {allSelected ? "Désélectionner tout" : "Sélectionner tout"}
-        </button>
+          <button
+            className="btn btn--secondary"
+            onClick={toggleAll}
+          >
+            {allSelected ? "Désélectionner tout" : "Sélectionner tout"}
+          </button>
+        </div>
       </div>
 
       <ImageGrid
@@ -97,7 +99,7 @@ export default function TierListAddOrRemovePage<T extends BaseGridImage<any>>(
         selectedIds={selectedIds}
         onToggleSelect={toggle}
         rows={5}
-        cardSize={110}
+        cardSize={8}
       />
 
       <div className="footer-actions">

@@ -1,5 +1,5 @@
 .tierlist-editor {
-  --tier-image-size: 96px; /* fallback */
+  --tier-image-size: 6rem; /* fallback */
 
   margin: 0 auto;
   padding: var(--space-lg);

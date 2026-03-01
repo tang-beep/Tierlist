@@ -47,7 +47,7 @@
 }
 
 .upload-container .tag-selector {
-  width: 20rem;
+  margin-top: var(--space-lg);
 }
 
 .upload-message {

@@ -27,7 +27,7 @@ export default function TierListEditorPage() {
   const [newRowNameAbove, setNewRowNameAbove] = useState("");
   const [newRowNameBelow, setNewRowNameBelow] = useState("");
 
-  const [imageSize] = useState(90);
+  const [imageSize] = useState(6);
 
   useEffect(() => {
     if (!id) return;
@@ -163,10 +163,10 @@ export default function TierListEditorPage() {
   return (
     <div 
       className="tierlist-editor"
-      style={{ "--tier-image-size": `${imageSize}px` } as React.CSSProperties}
+      style={{ "--tier-image-size": `${imageSize}rem` } as React.CSSProperties}
     >
       <div className="editor-header">
-        <button className="btn btn--primary" onClick={saveTierList}>
+        <button className="btn btn--secondary" onClick={saveTierList}>
           Sauvegarder
         </button>
         <button className="btn btn--danger" onClick={unassignAllImages}>

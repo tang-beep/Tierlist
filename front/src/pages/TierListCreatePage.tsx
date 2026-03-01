@@ -143,7 +143,7 @@ export default function TierListCreatePage() {
           onToggleTag={toggleTag}
         />
 
-        <div className="tierlist-create-tag-controls">
+        <div className="tierlist-create-select-btns">
           <button className="btn btn--secondary" onClick={toggleFilterMode}>
             {filterMode === "optional"
               ? "Mode : au moins un tag"
@@ -170,7 +170,7 @@ export default function TierListCreatePage() {
           {rows.map(row => (
             <div key={row.id} className="tierlist-create-row">
               <input
-                className="input"
+                className="input cat-input"
                 value={row.name}
                 onChange={e =>
                   setRows(prev =>
@@ -205,7 +205,7 @@ export default function TierListCreatePage() {
           ))}
         </div>
 
-        <button className="btn btn--secondary" onClick={addRow}>
+        <button className="btn btn--primary" onClick={addRow}>
           Ajouter une catégorie
         </button>
 

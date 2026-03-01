@@ -3,15 +3,14 @@
   top: 0;
   z-index: 1000;
 
-  background: var(--color-secondary);
   box-shadow: var(--shadow-sm);
 }
 
 .header-inner {
-  max-width: 1200px;
   margin: 0 auto;
   padding: var(--space-md);
-
+  background: var(--color-secondary);
+  
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -19,7 +18,7 @@
 
 .nav-links {
   display: flex;
-  gap: var(--space-xl);
+  gap: calc(var(--space-xl) + var(--space-xl));
   justify-content: center;
 }
 

@@ -54,12 +54,8 @@ export function useImageSelection<
 
   // Quand la liste de tags change, on recalcule les tags selectionnés
   // au cas ou un tag a ete supprime
-  useEffect(() => {
-    setSelectedTags(prev =>
-      prev.filter(tag =>
-        availableTags.includes(tag)
-      )
-    );
+  useEffect(() => {setSelectedTags(prev =>
+    prev.filter(tag => availableTags.includes(tag)));
   }, [availableTags]);
 
   // On s'assure que les images selectionnées seront toujours

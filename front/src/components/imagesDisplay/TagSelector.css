@@ -1,12 +1,14 @@
 .tag-selector {
+  display: flex;
+  flex-direction: column;
   text-align: center;
+  gap: var(--space-md);
 }
 
 /* Input de recherche */
 
 .tag-search {
   width: 100%;
-  margin-bottom: var(--space-md);
 }
 
 /* Liste des tags */
@@ -59,7 +61,6 @@
 /* Actions */
 
 .tag-actions {
-  margin-top: var(--space-md);
   display: flex;
   gap: var(--space-md);
   justify-content: center;

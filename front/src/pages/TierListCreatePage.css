@@ -1,7 +1,5 @@
 .tierlist-create-page {
-  margin: 0 auto;
   padding: var(--space-lg);
-
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
@@ -11,20 +9,21 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
-  width: 35rem;
+  width: 28rem;
 }
 
 .tierlist-create-tags {
   display: flex;
-  flex-direction: column;
-  margin: 0;
-  width: 25rem;
-  gap: var(--space-md);
+  flex-wrap: wrap;
+  gap: var(--space-xl);
+  align-items: center;
 }
 
-.tierlist-create-tag-controls {
+.tierlist-create-select-btns{
   display: flex;
-  gap: var(--space-md);
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 17rem;
 }
 
 
@@ -43,15 +42,25 @@
   flex-direction: column;
   gap: var(--space-sm);
   align-items: center;
+  width: 100%;
 }
 
 .tierlist-create-row {
   display: flex;
   gap: var(--space-sm);
   align-items: center;
+  width: 100%;
+}
+
+.tierlist-create-row .cat-input{
+  width: 100%;
 }
 
 .tierlist-create-error {
   color: var(--color-quaternary);
   font-size: var(--text-sm);
+}
+
+.tierlist-create-page .tag-selector {
+  width: 32rem;
 }

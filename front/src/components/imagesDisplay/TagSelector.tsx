@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import "./TagSelector.css";
 
 // Pour définir la largeur du TagSelector, le faire dans le css du composant parent, 
@@ -24,8 +24,8 @@ export default function TagSelector({
   selectedTags,
   onToggleTag,
   initialRows = 1,
-  rowHeight = 38,
-  gap = 8
+  rowHeight = 2.2,
+  gap = 0.5
 }: Props) {
   // Texte de recherche
   const [search, setSearch] = useState("");
@@ -33,6 +33,8 @@ export default function TagSelector({
   const [rows, setRows] = useState(initialRows);
 
   const listRef = useRef<HTMLDivElement>(null);
+
+  const [canGrow, setCanGrow] = useState(false);
 
   // Filtre les tags selon la recherche et les organise pour mettre
   // les selctionnés en premier
@@ -48,11 +50,28 @@ export default function TagSelector({
     });
   }, [availableTags, selectedTags, search]);
 
-  const maxHeight = rows * (rowHeight + gap + 2) - gap;
+  const maxHeight = rows * (rowHeight + gap) - gap;
 
-  const contentHeight = listRef.current?.scrollHeight ?? 0;
   // détermine si on affiche le More (si il reste des tags non affichés)
-  const canGrow = contentHeight > maxHeight + 1;
+  useLayoutEffect(() => {
+    if (!listRef.current) return;
+  
+    // Taille d'un rem
+    const rootFontSize = parseFloat(
+      getComputedStyle(document.documentElement).fontSize
+    );
+  
+    const contentHeight = listRef.current.scrollHeight;
+    const visibleHeight = rows * (rowHeight + gap) - gap;
+  
+    setCanGrow(contentHeight / rootFontSize > visibleHeight + 0.5);
+  }, [sortedTags, rows, rowHeight, gap]);
+
+  // Pour eviter tout probleme, on reset les rows quand il y a 
+  // un changement
+  useEffect(() => {
+    setRows(initialRows);
+  }, [search, availableTags, initialRows]);
 
   return (
     <div className="tag-selector">
@@ -68,24 +87,30 @@ export default function TagSelector({
         ref={listRef}
         className="tag-list"
         style={{
-          gap: `${gap}px`,
-          maxHeight: `${maxHeight}px`,
-          "--tag-height": `${rowHeight}px`
+          gap: `${gap}rem`,
+          maxHeight: `${maxHeight}rem`,
+          "--tag-height": `${rowHeight}rem`
         } as React.CSSProperties}
       >
-        {sortedTags.map(tag => {
-          const selected = selectedTags.includes(tag);
+        {sortedTags.length === 0 ? (
+          <div>
+            Aucun tag trouvé
+          </div>
+        ) : (
+          sortedTags.map(tag => {
+            const selected = selectedTags.includes(tag);
 
-          return (
-            <span
-              key={tag}
-              className={`tag-chip ${selected ? "selected" : ""}`}
-              onClick={() => onToggleTag(tag)}
-            >
-              {tag}
-            </span>
-          );
-        })}
+            return (
+              <span
+                key={tag}
+                className={`tag-chip ${selected ? "selected" : ""}`}
+                onClick={() => onToggleTag(tag)}
+              >
+                {tag}
+              </span>
+            );
+          })
+        )}
       </div>
 
       <div className="tag-actions">

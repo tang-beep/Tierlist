@@ -44,7 +44,7 @@
 .input {
   padding: var(--space-sm);
   border-radius: 0;
-  border: 1px solid var(--color-tertiary);
+  border: 0.1rem solid var(--color-tertiary);
   background: transparent;
   color: var(--color-tertiary);
 
@@ -63,7 +63,7 @@
 
 .card {
   background: transparent;
-  border: 1px solid var(--color-tertiary);
+  border: 0.13rem solid var(--color-tertiary);
   box-shadow: var(--shadow-sm);
   padding: var(--space-md);
 }

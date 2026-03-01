@@ -61,9 +61,9 @@ export default function Header() {
             </nav>
 
             <div className="theme-wrapper">
-            <button className="btn btn--danger" onClick={toggleTheme}>
-                {theme === "dark" ? "Clair" : "Sombre"}
-            </button>
+              <button className="btn btn--danger" onClick={toggleTheme}>
+                  {theme === "dark" ? "Clair" : "Sombre"}
+              </button>
             </div>
 
         </div>

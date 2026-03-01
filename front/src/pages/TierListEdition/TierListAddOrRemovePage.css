@@ -11,10 +11,18 @@
   justify-content: space-between;
 }
 
-.page-actions {
+.tierlist-addremove-tags {
   display: flex;
   flex-wrap: wrap;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.tierlist-addremove-select-btns{
+  display: flex;
+  flex-direction: column;
   gap: var(--space-sm);
+  width: 17rem;
 }
 
 .footer-actions {
@@ -23,6 +31,5 @@
 }
 
 .page-container .tag-selector {
-  width: 20rem;
-  margin: var(--space-sm) 0; 
+  width: 32rem;
 }
