@@ -72,9 +72,29 @@ export default function TierListCreatePage() {
       setError("Nom de la tierlist requis");
       return;
     }
+
+    if (tierListName.length > 50) {
+      setError("Nom de la tierlist au maximum 50 caractères");
+      return;
+    }
   
     if (selectedIds.length === 0) {
       setError("Sélectionne au moins une image");
+      return;
+    }
+
+    if (rows.length === 0) {
+      setError("Il faut au moins une catégorie");
+      return;
+    }
+
+    if (rows.some(r => r.name.trim().length === 0)) {
+      setError("Chaque catégorie doit avoir un nom");
+      return;
+    }
+    
+    if (rows.some(r => r.name.length > 50)) {
+      setError("Chaque nom de catégorie doit faire maximum 50 caractères");
       return;
     }
   
@@ -121,7 +141,10 @@ export default function TierListCreatePage() {
     );
   };
 
-  if (loading) return <h2>Chargement...</h2>;
+  if (loading) return (
+    <div className="tierlist-create-page">
+      <div className="title--principal">Chargement...</div>
+    </div>);
 
   return (
     <div className="tierlist-create-page">
@@ -132,6 +155,7 @@ export default function TierListCreatePage() {
           className="input"
           placeholder="Nom de la tierlist"
           value={tierListName}
+          maxLength={50}
           onChange={e => setTierListName(e.target.value)}
         />
       </div>
@@ -172,6 +196,7 @@ export default function TierListCreatePage() {
               <input
                 className="input cat-input"
                 value={row.name}
+                maxLength={50}
                 onChange={e =>
                   setRows(prev =>
                     prev.map(r =>

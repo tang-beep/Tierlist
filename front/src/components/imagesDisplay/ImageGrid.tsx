@@ -50,7 +50,12 @@ export default function ImageGrid({
   const [page, setPage] = useState(1);
   
   // Calcul du nombre d'images par page et de la hauteur de la grille
-  const { containerRef, pageSize } = useImageGridLayout({ rows, cardSize, gap });
+  const { containerRef, pageSize } = useImageGridLayout({ 
+    rows, 
+    cardSize, 
+    gap, 
+    dependency: images.length 
+  });
 
   // Organise les images pour mettre les selectionnées en premier
   const sortedImages = useMemo(

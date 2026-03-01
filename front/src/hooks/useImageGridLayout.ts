@@ -7,12 +7,15 @@ type Params = {
   cardSize: number;
   // Espacement des images
   gap: number;
+  // Permet de recalculer si le nb d'images change
+  dependency?: number;
 };
 
 export function useImageGridLayout({
   rows,
   cardSize,
-  gap
+  gap, 
+  dependency
 }: Params) {
   // Pour connaitre la taille reelle du conteneur
   const containerRef = useRef<HTMLDivElement>(null);
@@ -41,7 +44,7 @@ export function useImageGridLayout({
     // Recalculer si la fenetre change de taille
     window.addEventListener("resize", compute);
     return () => window.removeEventListener("resize", compute);
-  }, [rows, cardSize, gap]);
+  }, [rows, cardSize, gap, dependency]);
 
   return {
     // Conteneur du DOM

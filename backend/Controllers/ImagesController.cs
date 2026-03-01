@@ -25,8 +25,20 @@ namespace backend.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Upload([FromForm] UploadImageDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             if (dto.File == null || dto.File.Length == 0)
                 return BadRequest("Aucun fichier.");
+
+            if (dto.File.Length > 5 * 1024 * 1024)
+                return BadRequest("Fichier trop volumineux.");
+
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+            var extension = Path.GetExtension(dto.File.FileName).ToLower();
+
+            if (!allowedExtensions.Contains(extension))
+                return BadRequest("Type de fichier non autorisé.");
 
             // Dossier où stocker les images
             var imagesDir = Path.Combine(_env.ContentRootPath, "images");

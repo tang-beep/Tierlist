@@ -33,6 +33,8 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
   // Message pour informer l'utilisateur d'une erreur ou de la reussite de l'upload
   const [message, setMessage] = useState("");
 
+  const MAX_TITLE_LENGTH = 30;
+  const MAX_TAG_LENGTH = 20;
 
   // Gestion d'ajout de fichiers à upload
   const handleFiles = (fileList: FileList | null) => {
@@ -81,6 +83,11 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
       .map(t => t.trim())
       .filter(Boolean);
 
+    if (titles.some(t => t.length > MAX_TITLE_LENGTH)) {
+      setMessage(`Chaque nom d'image doit faire maximum ${MAX_TITLE_LENGTH} caractères`);
+      return;
+    }
+
     // Verification qu'on a bien le bon nombre de noms d'images
     if (titles.length !== files.length) {
       setMessage(
@@ -90,8 +97,13 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
     }
 
     // Les tags sont saisis en en tapant de nouveaux
-    const manualTags = tagInput.trim() == "" 
+    const manualTags = tagInput.trim() === "" 
       ? [] : tagInput.split(",").map(t => t.trim()).filter(Boolean);
+
+    if (manualTags.some(tag => tag.length > MAX_TAG_LENGTH)) {
+      setMessage(`Chaque tag doit faire maximum ${MAX_TAG_LENGTH} caractères`);
+      return;
+    }
 
     // On réunit les tags tapés et les tags cliqués (deja existants)
     const finalTagsArray = Array.from(
@@ -136,6 +148,7 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
           <input
             className="input"
             value={titlesInput}
+            maxLength={300}
             onChange={e => setTitlesInput(e.target.value)}
           />
         </div>
@@ -145,6 +158,7 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
           <input
             className="input"
             value={tagInput}
+            maxLength={100}
             onChange={e => setTagInput(e.target.value)}
           />
         </div>

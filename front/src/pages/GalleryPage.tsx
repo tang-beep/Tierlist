@@ -75,7 +75,10 @@ export default function GalleryPage() {
     }
   };
 
-  if (loading) return <h2 className="title--secondary">Chargement...</h2>;
+  if (loading) return (
+    <div className="gallery-page">
+      <div className="title--principal">Chargement...</div>
+    </div>);
 
   return (
     <div className="gallery-page">

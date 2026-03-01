@@ -29,6 +29,8 @@ export default function TierListEditorPage() {
 
   const [imageSize] = useState(6);
 
+  const MAX_ROW_NAME_LENGTH = 50;
+
   useEffect(() => {
     if (!id) return;
 
@@ -82,7 +84,12 @@ export default function TierListEditorPage() {
 
 
   const renameRowWithValue = (row: TierRow, value: string) => {
-    if (!value.trim()) return;
+    const trimmed = value.trim();
+
+    if (!trimmed) return;
+
+    if (trimmed.length > MAX_ROW_NAME_LENGTH) return;
+
     setRows(prev =>
       prev.map(r => (r.id === row.id ? { ...r, name: value } : r))
     );
@@ -99,21 +106,40 @@ export default function TierListEditorPage() {
     position: "above" | "below",
     name?: string
   ) => {
-    const newRow: TierRow = {
-      id: crypto.randomUUID(),
-      name: name?.trim() || "Nouvelle ligne",
-      color: "#ccc",
-      order: row.order + (position === "below" ? 1 : 0)
-    };
+    setRows(prev => {
+      const trimmedName = name?.trim() || "Nouvelle ligne";
+      if (trimmedName.length > MAX_ROW_NAME_LENGTH) return prev;
 
-    setRows(prev =>
-      [...prev, newRow]
-        .map((r, i) => ({ ...r, order: i }))
-        .sort((a, b) => a.order - b.order)
-    );
+      const sorted = [...prev].sort((a, b) => a.order - b.order);
+      const index = sorted.findIndex(r => r.id === row.id);
+      if (index === -1) return prev;
+  
+      const insertIndex = position === "above" ? index : index + 1;
+  
+      const newRow: TierRow = {
+        id: crypto.randomUUID(),
+        name: trimmedName,
+        color: "#ccc",
+        order: 0
+      };
+  
+      const updated = [
+        ...sorted.slice(0, insertIndex),
+        newRow,
+        ...sorted.slice(insertIndex)
+      ];
+  
+      // Recalcul des orders
+      return updated.map((r, i) => ({
+        ...r,
+        order: i
+      }));
+    });
   };
 
   const deleteRow = (row: TierRow) => {
+    if (rows.length <= 1) return;
+    
     if (!confirm("Supprimer la ligne ? Les images seront déplacées en unassigned."))
       return;
 
@@ -129,6 +155,15 @@ export default function TierListEditorPage() {
 
   const saveTierList = async () => {
     if (!id) return;
+
+    const hasInvalidRow = rows.some(
+      r => !r.name.trim() || r.name.length > MAX_ROW_NAME_LENGTH
+    );
+    
+    if (hasInvalidRow) {
+      alert("Chaque catégorie doit avoir max 50 caractères");
+      return;
+    }
 
     await updateTierListImages(
       id,
@@ -152,13 +187,16 @@ export default function TierListEditorPage() {
     );
   };
 
-  if (loading) return <h2>Chargement...</h2>;
-
   const imagesForRow = (rowId: string) =>
     images.filter(img => img.tierRowId === rowId);
 
   const unassignedImages = images.filter(img => img.tierRowId === null);
 
+  
+  if (loading) return (
+    <div className="tierlist-editor">
+      <div className="title--principal">Chargement...</div>
+    </div>);
 
   return (
     <div 
@@ -177,7 +215,7 @@ export default function TierListEditorPage() {
       <div className="title--principal">{name}</div>
 
       <div className="tierlist-table">
-        {rows
+        {[...rows]
           .sort((a, b) => a.order - b.order)
           .map(row => (
             <div key={row.id} className="tierlist-row">
@@ -261,6 +299,7 @@ export default function TierListEditorPage() {
               <input
                 className="input"
                 value={renameValue}
+                maxLength={50}
                 onChange={e => setRenameValue(e.target.value)}
               />
             </div>
@@ -296,6 +335,7 @@ export default function TierListEditorPage() {
               <input
                 className="input"
                 value={newRowNameAbove}
+                maxLength={50}
                 onChange={e => setNewRowNameAbove(e.target.value)}
               />
             </div>
@@ -313,13 +353,16 @@ export default function TierListEditorPage() {
               <input
                 className="input"
                 value={newRowNameBelow}
+                maxLength={50}
                 onChange={e => setNewRowNameBelow(e.target.value)}
               />
             </div>
 
             <button
               className="btn btn--danger"
+              disabled={rows.length <= 1}
               onClick={() => {
+                if (rows.length <= 1) return;
                 deleteRow(menuRow);
                 setMenuRow(null);
               }}

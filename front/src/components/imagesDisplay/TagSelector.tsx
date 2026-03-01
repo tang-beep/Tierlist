@@ -79,6 +79,7 @@ export default function TagSelector({
         type="text"
         placeholder="Rechercher un tag..."
         value={search}
+        maxLength={60}
         onChange={e => setSearch(e.target.value)}
         className="input tag-search"
       />
