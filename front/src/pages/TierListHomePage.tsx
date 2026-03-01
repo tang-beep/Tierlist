@@ -15,7 +15,10 @@ export default function TierListHomePage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <h2>Chargement...</h2>;
+  if (loading) return (
+    <div className="tierlist-home">
+      <div className="title--principal">Chargement...</div>
+    </div>);
 
   return (
     <div className="tierlist-home">

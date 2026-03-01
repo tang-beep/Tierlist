@@ -187,13 +187,16 @@ export default function TierListEditorPage() {
     );
   };
 
-  if (loading) return <h2>Chargement...</h2>;
-
   const imagesForRow = (rowId: string) =>
     images.filter(img => img.tierRowId === rowId);
 
   const unassignedImages = images.filter(img => img.tierRowId === null);
 
+  
+  if (loading) return (
+    <div className="tierlist-editor">
+      <div className="title--principal">Chargement...</div>
+    </div>);
 
   return (
     <div 

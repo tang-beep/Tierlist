@@ -141,7 +141,10 @@ export default function TierListCreatePage() {
     );
   };
 
-  if (loading) return <h2>Chargement...</h2>;
+  if (loading) return (
+    <div className="tierlist-create-page">
+      <div className="title--principal">Chargement...</div>
+    </div>);
 
   return (
     <div className="tierlist-create-page">

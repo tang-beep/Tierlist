@@ -54,7 +54,10 @@ export default function TierListAddOrRemovePage<T extends BaseGridImage<any>>(
     navigate(`/tierlists/${id}`);
   };
 
-  if (loading) return <h2>Chargement...</h2>;
+  if (loading) return (
+    <div className="page-container">
+      <div className="title--principal">Chargement...</div>
+    </div>);
 
   return (
     <div className="page-container">
