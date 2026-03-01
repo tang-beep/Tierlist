@@ -32,10 +32,8 @@ export function useImageSelection<
   const {
     selectedIds,
     toggle,
-    toggleAll,
-    allSelected,
     setSelectedIds
-  } = useMultiSelect(filteredImages);
+  } = useMultiSelect();
 
   // Récupère les images correspondant aux IDs sélectionnés
   const selectedImages = images.filter(img =>
@@ -66,6 +64,31 @@ export function useImageSelection<
       img => !selectedIds.includes(img.id)
     )
   ];
+
+  // Calcule si les images filtrées sont toutes selectionnées
+  const visibleIds = imagesToShow.map(img => img.id);
+
+  const allSelected =
+    visibleIds.length > 0 &&
+    visibleIds.every(id => selectedIds.includes(id));
+
+  // Selectionne / deselectionne toutes les filtrées
+  // Si toutes les images filtrées sont sélectionnées, on les désélectionne
+  // Sinon, on sélectionne celles qui ne le sont pas encore.
+  const toggleAll = () => {
+    if (visibleIds.length === 0) return;
+
+    if (allSelected) {
+      setSelectedIds(prev =>
+        prev.filter(id => !visibleIds.includes(id))
+      );
+    } else {
+      setSelectedIds(prev => [
+        ...prev,
+        ...visibleIds.filter(id => !prev.includes(id))
+      ]);
+    }
+  };
 
   // Fonction de selection de tag
   const toggleTag = (tag: string) => {
