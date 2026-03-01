@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Models
 {
+    [Index(nameof(Name), IsUnique = true)]
     public class TierList
     {
         public Guid Id { get; set; }

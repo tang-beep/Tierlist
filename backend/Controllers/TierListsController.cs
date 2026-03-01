@@ -27,6 +27,9 @@ namespace backend.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            if (await _context.TierLists.AnyAsync(t => t.Name.ToLower() == dto.Name.ToLower()))
+                return BadRequest("Une tierlist avec ce nom existe déjà");
+
             var images = await _context.ImageItems
                 .Where(i => dto.ImageIds.Contains(i.Id))
                 .ToListAsync();
