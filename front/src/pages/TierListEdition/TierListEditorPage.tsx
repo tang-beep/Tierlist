@@ -99,18 +99,33 @@ export default function TierListEditorPage() {
     position: "above" | "below",
     name?: string
   ) => {
-    const newRow: TierRow = {
-      id: crypto.randomUUID(),
-      name: name?.trim() || "Nouvelle ligne",
-      color: "#ccc",
-      order: row.order + (position === "below" ? 1 : 0)
-    };
-
-    setRows(prev =>
-      [...prev, newRow]
-        .map((r, i) => ({ ...r, order: i }))
-        .sort((a, b) => a.order - b.order)
-    );
+    setRows(prev => {
+      const sorted = [...prev].sort((a, b) => a.order - b.order);
+  
+      const index = sorted.findIndex(r => r.id === row.id);
+      if (index === -1) return prev;
+  
+      const insertIndex = position === "above" ? index : index + 1;
+  
+      const newRow: TierRow = {
+        id: crypto.randomUUID(),
+        name: name?.trim() || "Nouvelle ligne",
+        color: "#ccc",
+        order: 0
+      };
+  
+      const updated = [
+        ...sorted.slice(0, insertIndex),
+        newRow,
+        ...sorted.slice(insertIndex)
+      ];
+  
+      // Recalcul des orders
+      return updated.map((r, i) => ({
+        ...r,
+        order: i
+      }));
+    });
   };
 
   const deleteRow = (row: TierRow) => {
@@ -177,7 +192,7 @@ export default function TierListEditorPage() {
       <div className="title--principal">{name}</div>
 
       <div className="tierlist-table">
-        {rows
+        {[...rows]
           .sort((a, b) => a.order - b.order)
           .map(row => (
             <div key={row.id} className="tierlist-row">
