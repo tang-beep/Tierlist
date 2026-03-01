@@ -24,14 +24,8 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateTierListDto dto)
         {
-            if (string.IsNullOrWhiteSpace(dto.Name))
-                return BadRequest("Nom requis");
-
-            if (!dto.Rows.Any())
-                return BadRequest("Au moins une catégorie requise");
-
-            if (!dto.ImageIds.Any())
-                return BadRequest("Aucune image sélectionnée");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             var images = await _context.ImageItems
                 .Where(i => dto.ImageIds.Contains(i.Id))
@@ -131,13 +125,19 @@ namespace backend.Controllers
         [HttpPut("{tierListId}/images")]
         public async Task<IActionResult> SaveImages(Guid tierListId, [FromBody] SaveTierListImagesDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var images = await _context.TierImages
                 .Where(i => i.TierListId == tierListId)
                 .ToListAsync();
 
             foreach (var imgDto in dto.Images)
             {
-                var image = images.First(i => i.Id == imgDto.Id);
+                var image = images.FirstOrDefault(i => i.Id == imgDto.Id);
+                if (image == null)
+                    return BadRequest("Image invalide.");
+
                 image.TierRowId = imgDto.TierRowId;
                 image.Order = imgDto.Order;
             }
@@ -150,11 +150,28 @@ namespace backend.Controllers
         [HttpPost("{tierListId}/images")]
         public async Task<IActionResult> AddImages(Guid tierListId, [FromBody] AddTierListImagesDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var tierListExists = await _context.TierLists.AnyAsync(t => t.Id == tierListId);
+            if (!tierListExists)
+                return NotFound("TierList introuvable.");
+
+            var validImageIds = await _context.ImageItems
+                .Where(i => dto.ImageItemIds.Contains(i.Id))
+                .Select(i => i.Id)
+                .ToListAsync();
+
+            if (validImageIds.Count != dto.ImageItemIds.Count)
+                return BadRequest("Certaines images sont invalides.");
+
+            var uniqueIds = validImageIds.Distinct().ToList();
+
             var maxOrder = await _context.TierImages
                 .Where(t => t.TierListId == tierListId)
                 .MaxAsync(t => (int?)t.Order) ?? 0;
 
-            foreach (var imageId in dto.ImageItemIds)
+            foreach (var imageId in uniqueIds)
             {
                 _context.TierImages.Add(new TierImage
                 {
@@ -174,6 +191,9 @@ namespace backend.Controllers
         [HttpDelete("{tierListId}/images")]
         public async Task<IActionResult> RemoveImages(Guid tierListId, [FromBody] RemoveTierListImagesDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var images = await _context.TierImages
                 .Where(t =>
                     t.TierListId == tierListId &&
@@ -189,6 +209,15 @@ namespace backend.Controllers
         [HttpPut("{tierListId}/rows")]
         public async Task<IActionResult> SaveRows(Guid tierListId, [FromBody] SaveTierListRowsDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var tierListExists = await _context.TierLists
+                .AnyAsync(t => t.Id == tierListId);
+
+            if (!tierListExists)
+                return NotFound("TierList introuvable");
+
             var rows = await _context.TierRows
                 .Where(r => r.TierListId == tierListId)
                 .ToListAsync();

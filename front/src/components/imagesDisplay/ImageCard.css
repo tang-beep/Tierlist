@@ -61,6 +61,7 @@
   font-size: clamp(0.7rem, 1.6vw, 0.95rem);
   text-align: center;
   line-height: 1.2;
+  overflow-wrap: anywhere;
 
   margin: 0;
 

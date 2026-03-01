@@ -29,6 +29,8 @@ export default function TierListEditorPage() {
 
   const [imageSize] = useState(6);
 
+  const MAX_ROW_NAME_LENGTH = 50;
+
   useEffect(() => {
     if (!id) return;
 
@@ -82,7 +84,12 @@ export default function TierListEditorPage() {
 
 
   const renameRowWithValue = (row: TierRow, value: string) => {
-    if (!value.trim()) return;
+    const trimmed = value.trim();
+
+    if (!trimmed) return;
+
+    if (trimmed.length > MAX_ROW_NAME_LENGTH) return;
+
     setRows(prev =>
       prev.map(r => (r.id === row.id ? { ...r, name: value } : r))
     );
@@ -100,8 +107,10 @@ export default function TierListEditorPage() {
     name?: string
   ) => {
     setRows(prev => {
+      const trimmedName = name?.trim() || "Nouvelle ligne";
+      if (trimmedName.length > MAX_ROW_NAME_LENGTH) return prev;
+
       const sorted = [...prev].sort((a, b) => a.order - b.order);
-  
       const index = sorted.findIndex(r => r.id === row.id);
       if (index === -1) return prev;
   
@@ -109,7 +118,7 @@ export default function TierListEditorPage() {
   
       const newRow: TierRow = {
         id: crypto.randomUUID(),
-        name: name?.trim() || "Nouvelle ligne",
+        name: trimmedName,
         color: "#ccc",
         order: 0
       };
@@ -129,6 +138,8 @@ export default function TierListEditorPage() {
   };
 
   const deleteRow = (row: TierRow) => {
+    if (rows.length <= 1) return;
+    
     if (!confirm("Supprimer la ligne ? Les images seront déplacées en unassigned."))
       return;
 
@@ -144,6 +155,15 @@ export default function TierListEditorPage() {
 
   const saveTierList = async () => {
     if (!id) return;
+
+    const hasInvalidRow = rows.some(
+      r => !r.name.trim() || r.name.length > MAX_ROW_NAME_LENGTH
+    );
+    
+    if (hasInvalidRow) {
+      alert("Chaque catégorie doit avoir max 50 caractères");
+      return;
+    }
 
     await updateTierListImages(
       id,
@@ -276,6 +296,7 @@ export default function TierListEditorPage() {
               <input
                 className="input"
                 value={renameValue}
+                maxLength={50}
                 onChange={e => setRenameValue(e.target.value)}
               />
             </div>
@@ -311,6 +332,7 @@ export default function TierListEditorPage() {
               <input
                 className="input"
                 value={newRowNameAbove}
+                maxLength={50}
                 onChange={e => setNewRowNameAbove(e.target.value)}
               />
             </div>
@@ -328,13 +350,16 @@ export default function TierListEditorPage() {
               <input
                 className="input"
                 value={newRowNameBelow}
+                maxLength={50}
                 onChange={e => setNewRowNameBelow(e.target.value)}
               />
             </div>
 
             <button
               className="btn btn--danger"
+              disabled={rows.length <= 1}
               onClick={() => {
+                if (rows.length <= 1) return;
                 deleteRow(menuRow);
                 setMenuRow(null);
               }}

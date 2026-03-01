@@ -1,8 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace backend.Models
 {
     public class TierList
     {
         public Guid Id { get; set; }
+
+        [Required]
+        [MaxLength(50)]
         public string Name { get; set; } = "";
 
         public List<TierRow> Rows { get; set; } = new();
