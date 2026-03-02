@@ -50,7 +50,7 @@ export default function Header() {
 
             <nav className="nav-links">
             <Link to="/" className={isActive("/") ? "active" : ""}>
-                Gallerie d'images
+                Galerie d'images
             </Link>
             <Link to="/tierlists" className={isActive("/tierlists") ? "active" : ""}>
                 TierLists
