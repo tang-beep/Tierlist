@@ -5,6 +5,8 @@ import "./UploadForm.css";
 
 import { uploadImages } from "../../api/images.api";
 
+import { useTranslation } from "../../translations/useTranslation";
+
 /* Composant qui gère l'upload de nouvelles images dans la base de données */
 
 type Props = {
@@ -31,10 +33,15 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // Message pour informer l'utilisateur d'une erreur ou de la reussite de l'upload
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<{
+    key: string;
+    vars?: Record<string, string | number>;
+  } | null>(null);
 
   const MAX_TITLE_LENGTH = 30;
   const MAX_TAG_LENGTH = 20;
+
+  const trans = useTranslation();
 
   // Gestion d'ajout de fichiers à upload
   const handleFiles = (fileList: FileList | null) => {
@@ -56,7 +63,7 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
     setTitlesInput("");
     setTagInput("");
     setSelectedTags([]);
-    setMessage("");
+    setMessage(null);
   };
 
   // Supprimer une image en preview
@@ -70,10 +77,10 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setMessage("");
+    setMessage(null);
 
     if (files.length === 0) {
-      setMessage("Sélectionne au moins une image");
+      setMessage({key: "upload.errNoFiles"});
       return;
     }
 
@@ -84,24 +91,22 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
       .filter(Boolean);
 
     if (titles.some(t => t.length > MAX_TITLE_LENGTH)) {
-      setMessage(`Chaque nom d'image doit faire maximum ${MAX_TITLE_LENGTH} caractères`);
+      setMessage({key: "upload.errTitleLength", vars: {max: MAX_TITLE_LENGTH}});
       return;
     }
 
     // Verification qu'on a bien le bon nombre de noms d'images
     if (titles.length !== files.length) {
-      setMessage(
-        `Il faut ${files.length} titres (actuellement ${titles.length})`
-      );
+      setMessage({key: "upload.errNbTitles", vars: {nbFiles: files.length, nbTitles: titles.length}});
       return;
     }
-
+    
     // Les tags sont saisis en en tapant de nouveaux
     const manualTags = tagInput.trim() === "" 
       ? [] : tagInput.split(",").map(t => t.trim()).filter(Boolean);
 
     if (manualTags.some(tag => tag.length > MAX_TAG_LENGTH)) {
-      setMessage(`Chaque tag doit faire maximum ${MAX_TAG_LENGTH} caractères`);
+      setMessage({key: "upload.errTagLength", vars: { max: MAX_TAG_LENGTH }});
       return;
     }
 
@@ -111,28 +116,24 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
     );
 
     if (finalTagsArray.length === 0) {
-      setMessage("Ajoute au moins un tag (manuel ou sélectionné)");
+      setMessage({key: "upload.errNoTags"});
       return;
     }
 
     // On doit envoyer les tags dans une seule chaine
     const finalTags = finalTagsArray.join(",");
 
-    setMessage("Upload en cours...");
+    setMessage({key:"upload.uploading"});
 
     // Appel API
     try {
       await uploadImages(files, titles, finalTags);
     
-      setMessage("Upload terminé !");
+      setMessage({key: "upload.success"});
       onUploaded();
       clearAll();
     } catch (err) {
-      setMessage(
-        err instanceof Error
-          ? err.message
-          : "Une erreur est survenue pendant l’upload"
-      );
+      setMessage({key: "upload.errGeneric"});
     }
   };
 
@@ -140,11 +141,11 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
 
   return (
     <div className="upload-container card">
-      <div className="title--principal">Uploader des images</div>
+      <div className="title--principal"> {trans("upload.uploadTitle")} </div>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Titres (séparés par ,)</label>
+          <label> {trans("upload.titlesInputMessage")} </label>
           <input
             className="input"
             value={titlesInput}
@@ -154,7 +155,7 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
         </div>
 
         <div className="form-group">
-          <label>Tags manuels (séparés par ,)</label>
+          <label> {trans("upload.tagInputMessage")} </label>
           <input
             className="input"
             value={tagInput}
@@ -190,20 +191,24 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
             className="btn btn--primary"
             onClick={() => fileInputRef.current?.click()}
           >
-            Choisir des images
+            {trans("upload.chooseFileBtn")}
           </button>
 
           {files.length > 0 && (
             <div className="file-count">
-              {files.length} fichier(s) sélectionné(s)
+              {files.length} {trans("upload.filesNb")}
             </div>
           )}
         </div>
         <div className="form-btns">
 
-          <button type="submit" className="btn btn--primary">Envoyer</button>
+          <button type="submit" className="btn btn--primary"> {trans("upload.uploadBtn")} </button>
 
-          {message && <div className="upload-message">{message}</div>}
+          {message && (
+            <div className="upload-message">
+              {trans(message.key, message.vars)}
+            </div>
+          )}
           
         </div>
         
@@ -213,7 +218,7 @@ export default function UploadForm({ onUploaded, availableTags }: Props) {
           onClick={clearAll}
           className="btn btn--danger"
           >
-            Tout enlever
+            {trans("upload.allRemove")}
           </button>
         )}
       </form>

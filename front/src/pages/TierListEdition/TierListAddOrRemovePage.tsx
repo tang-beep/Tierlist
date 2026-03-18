@@ -4,6 +4,7 @@ import TagSelector from "../../components/imagesDisplay/TagSelector";
 import { useImageSelection } from "../../hooks/useImageSelection";
 
 import "./TierListAddOrRemovePage.css";
+import { useTranslation } from "../../translations/useTranslation";
 
 type BaseGridImage<IdType> = {
   id: IdType;
@@ -34,6 +35,8 @@ export default function TierListAddOrRemovePage<T extends BaseGridImage<any>>(
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
+  const trans = useTranslation();
+
   const {
     availableTags,
     selectedTags,
@@ -56,7 +59,7 @@ export default function TierListAddOrRemovePage<T extends BaseGridImage<any>>(
 
   if (loading) return (
     <div className="page-container">
-      <div className="title--principal">Chargement...</div>
+      <div className="title--principal"> {trans("common.loading")} </div>
     </div>);
 
   return (
@@ -67,7 +70,7 @@ export default function TierListAddOrRemovePage<T extends BaseGridImage<any>>(
           className="btn btn--secondary"
           onClick={() => navigate(`/tierlists/${id}`)}
         >
-          Retour
+          {trans("common.back")}
         </button>
       </div>
 
@@ -79,20 +82,12 @@ export default function TierListAddOrRemovePage<T extends BaseGridImage<any>>(
         />
 
         <div className="tierlist-addremove-select-btns">
-          <button
-            className="btn btn--secondary"
-            onClick={toggleFilterMode}
-          >
-            {filterMode === "optional"
-              ? "Mode : au moins un tag"
-              : "Mode : tous les tags"}
+          <button className="btn btn--secondary" onClick={toggleFilterMode}>
+            {filterMode === "optional" ? trans("tag.modeOr") : trans("tag.modeAnd")}
           </button>
 
-          <button
-            className="btn btn--secondary"
-            onClick={toggleAll}
-          >
-            {allSelected ? "Désélectionner tout" : "Sélectionner tout"}
+          <button className="btn btn--secondary" onClick={toggleAll}>
+            {allSelected ? trans("common.unselectAll") : trans("common.selectAll")}
           </button>
         </div>
       </div>

@@ -11,6 +11,8 @@ import { fetchImages } from "../api/images.api";
 import { createTierList } from "../api/tierlists.api";
 
 import type { ImageItem, TierRow } from "../types";
+import { useTranslation } from "../translations/useTranslation";
+import {X} from "lucide-react";
 
 
 export default function TierListCreatePage() {
@@ -20,7 +22,15 @@ export default function TierListCreatePage() {
 
   const [images, setImages] = useState<ImageItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<{
+    key: string;
+    vars?: Record<string, string | number>;
+  } | null>(null);
+
+  const trans = useTranslation();
+  
+  const MAX_TIERLIST_NAME = 50;
+  const MAX_CAT_NAME = 50;
 
   const [rows, setRows] = useState<TierRow[]>([
     { id: crypto.randomUUID(), name: "S", color: "#ff595e", order: 0 },
@@ -36,11 +46,7 @@ export default function TierListCreatePage() {
       const data = await fetchImages();
       setImages(data);
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Erreur lors du chargement des images"
-      );
+      setError({key: "common.errLoading"});
     } finally {
       setLoading(false);
     }
@@ -69,32 +75,32 @@ export default function TierListCreatePage() {
     setError(null);
   
     if (!tierListName.trim()) {
-      setError("Nom de la tierlist requis");
+      setError({key: "createPage.errNameRequired"});
       return;
     }
 
-    if (tierListName.length > 50) {
-      setError("Nom de la tierlist au maximum 50 caractères");
+    if (tierListName.length > MAX_TIERLIST_NAME) {
+      setError({key: "createPage.errNameLength", vars: {max: MAX_TIERLIST_NAME}});
       return;
     }
   
     if (selectedIds.length === 0) {
-      setError("Sélectionne au moins une image");
+      setError({key: "createPage.errNoImage"});
       return;
     }
 
     if (rows.length === 0) {
-      setError("Il faut au moins une catégorie");
+      setError({key: "createPage.errNoCategory"});
       return;
     }
 
     if (rows.some(r => r.name.trim().length === 0)) {
-      setError("Chaque catégorie doit avoir un nom");
+      setError({key: "createPage.errEmptyCategory"});
       return;
     }
     
-    if (rows.some(r => r.name.length > 50)) {
-      setError("Chaque nom de catégorie doit faire maximum 50 caractères");
+    if (rows.some(r => r.name.length > MAX_CAT_NAME)) {
+      setError({key: "createPage.errCategoryLength", vars: {max: MAX_CAT_NAME}});
       return;
     }
   
@@ -112,11 +118,7 @@ export default function TierListCreatePage() {
       const { id } = await createTierList(payload);
       navigate(`/tierlists/${id}`);
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Erreur lors de la création de la tierlist"
-      );
+      setError({key: "createPage.errCreate"});
     }
   };
   
@@ -126,7 +128,7 @@ export default function TierListCreatePage() {
       ...prev,
       {
         id: crypto.randomUUID(),
-        name: "Nouvelle ligne",
+        name: trans("createPage.defaultRowName"),
         color: "#cccccc",
         order: prev.length
       }
@@ -143,19 +145,19 @@ export default function TierListCreatePage() {
 
   if (loading) return (
     <div className="tierlist-create-page">
-      <div className="title--principal">Chargement...</div>
+      <div className="title--principal"> {trans("common.loading")} </div>
     </div>);
 
   return (
     <div className="tierlist-create-page">
       <div className="tierlist-create-header">
-        <div className="title--principal">Créer une tierlist</div>
+        <div className="title--principal"> {trans("createPage.title")} </div>
 
         <input
           className="input"
-          placeholder="Nom de la tierlist"
+          placeholder={trans("createPage.namePlaceholder")}
           value={tierListName}
-          maxLength={50}
+          maxLength={MAX_TIERLIST_NAME}
           onChange={e => setTierListName(e.target.value)}
         />
       </div>
@@ -170,12 +172,12 @@ export default function TierListCreatePage() {
         <div className="tierlist-create-select-btns">
           <button className="btn btn--secondary" onClick={toggleFilterMode}>
             {filterMode === "optional"
-              ? "Mode : au moins un tag"
-              : "Mode : tous les tags"}
+              ? trans("tag.modeOr")
+              : trans("tag.modeAnd")}
           </button>
 
           <button className="btn btn--secondary" onClick={toggleAll}>
-            {allSelected ? "Désélectionner tout" : "Sélectionner tout"}
+            {allSelected ? trans("common.unselectAll") : trans("common.selectAll")}
           </button>
         </div>
       </div>
@@ -188,7 +190,7 @@ export default function TierListCreatePage() {
       />
 
       <div className="tierlist-create-categories">
-        <div className="title--secondary">Catégories</div>
+        <div className="title--secondary"> {trans("createPage.categories")} </div>
 
         <div className="tierlist-create-rows">
           {rows.map(row => (
@@ -196,7 +198,7 @@ export default function TierListCreatePage() {
               <input
                 className="input cat-input"
                 value={row.name}
-                maxLength={50}
+                maxLength={MAX_CAT_NAME}
                 onChange={e =>
                   setRows(prev =>
                     prev.map(r =>
@@ -224,21 +226,25 @@ export default function TierListCreatePage() {
                 disabled={rows.length <= 1}
                 onClick={() => removeRow(row.id)}
               >
-                ✖
+                <X size= {20}/>
               </button>
             </div>
           ))}
         </div>
 
         <button className="btn btn--primary" onClick={addRow}>
-          Ajouter une catégorie
+          {trans("createPage.addCategory")}
         </button>
 
         <button className="btn btn--primary" onClick={handleCreateTierList}>
-          Créer la tierlist
+          {trans("createPage.create")}
         </button>
 
-        {error && <div className="tierlist-create-error">{error}</div>}
+        {error && (
+          <div className="tierlist-create-error">
+            {trans(error.key, error.vars)}
+          </div>
+        )}
       </div>
     </div>
   );

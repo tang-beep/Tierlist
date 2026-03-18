@@ -11,6 +11,8 @@ import {
   updateTierListImages,
   updateTierListRows
 } from "../../api/tierlists.api";
+import { useTranslation } from "../../translations/useTranslation";
+import {ChevronsUp, ChevronsDown} from "lucide-react";
 
 export default function TierListEditorPage() {
   const { id } = useParams<{ id: string }>();
@@ -28,8 +30,9 @@ export default function TierListEditorPage() {
   const [newRowNameBelow, setNewRowNameBelow] = useState("");
 
   const [imageSize] = useState(6);
-
   const MAX_ROW_NAME_LENGTH = 50;
+
+  const trans = useTranslation();
 
   useEffect(() => {
     if (!id) return;
@@ -195,7 +198,7 @@ export default function TierListEditorPage() {
   
   if (loading) return (
     <div className="tierlist-editor">
-      <div className="title--principal">Chargement...</div>
+      <div className="title--principal"> {trans("common.loading")} </div>
     </div>);
 
   return (
@@ -205,10 +208,10 @@ export default function TierListEditorPage() {
     >
       <div className="editor-header">
         <button className="btn btn--secondary" onClick={saveTierList}>
-          Sauvegarder
+          {trans("tlEdition.save")}
         </button>
         <button className="btn btn--danger" onClick={unassignAllImages}>
-          Tout retirer
+          {trans("tlEdition.withdrawAll")}
         </button>
       </div>
 
@@ -250,7 +253,7 @@ export default function TierListEditorPage() {
           ))}
       </div>
 
-      <div className="title--principal">Images non classées</div>
+      <div className="title--principal"> {trans("tlEdition.unassignedTitle")} </div>
 
       <TierRowDropZone rowId={null} changeRow={changeRow}>
         {unassignedImages.map((img, index) => (
@@ -271,13 +274,13 @@ export default function TierListEditorPage() {
           onClick={() => navigate(`/tierlists/${id}/add-images`)}
           className="btn btn--primary"
         >
-          Ajouter des images
+          {trans("tlEdition.addImgTitle")}
         </button>
         <button 
           onClick={() => navigate(`/tierlists/${id}/remove-images`)}
           className="btn btn--primary"
         >
-          Supprimer des images
+          {trans("tlEdition.removeImgTitle")}
         </button>
       </div>
 
@@ -294,7 +297,7 @@ export default function TierListEditorPage() {
                   setMenuRow(null);
                 }}
               >
-                Renommer
+                {trans("tlEdition.rename")}
               </button>
               <input
                 className="input"
@@ -312,7 +315,7 @@ export default function TierListEditorPage() {
                   setMenuRow(null);
                 }}
               >
-                Changer Coul.
+                {trans("tlEdition.changeColor")}
               </button>
               <input
                 className="input"
@@ -330,7 +333,7 @@ export default function TierListEditorPage() {
                   setMenuRow(null);
                 }}
               >
-                Nvlle ligne 🠕
+                {trans("tlEdition.newline")} <ChevronsUp size={16} />
               </button>
               <input
                 className="input"
@@ -348,7 +351,7 @@ export default function TierListEditorPage() {
                   setMenuRow(null);
                 }}
               >
-                Nvlle ligne 🠗
+                {trans("tlEdition.newline")} <ChevronsDown size={16} />
               </button>
               <input
                 className="input"
@@ -367,7 +370,7 @@ export default function TierListEditorPage() {
                 setMenuRow(null);
               }}
             >
-              Supprimer la ligne
+              {trans("tlEdition.removeLine")}
             </button>
           </div>
         </div>

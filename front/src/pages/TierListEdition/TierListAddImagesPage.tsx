@@ -8,10 +8,14 @@ import { fetchTierList, addImagesToTierList } from "../../api/tierlists.api";
 
 import type { ImageItem } from "../../types";
 
+import { useTranslation } from "../../translations/useTranslation";
+
 export default function TierListAddImagesPage() {
   const { id } = useParams<{ id: string }>();
   const [images, setImages] = useState<ImageItem[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const trans = useTranslation();
 
   useEffect(() => {
     if (!id) return;
@@ -39,11 +43,11 @@ export default function TierListAddImagesPage() {
 
   return (
     <TierListAddOrRemovePage
-      title="Ajouter des images"
+      title={trans("tlEdition.addImgTitle")}
       images={images}
       loading={loading}
       actionVariant="primary"
-      actionLabel={(count) => `Ajouter ${count} images`}
+      actionLabel={(count) => trans("tlEdition.addImgs", {count: count})}
       onConfirm={addImagesToTierList}
     />
   );

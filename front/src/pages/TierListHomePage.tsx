@@ -4,10 +4,13 @@ import "./TierListHomePage.css";
 
 import { fetchTierLists } from "../api/tierlists.api";
 import type { TierList } from "../types";
+import { useTranslation } from "../translations/useTranslation";
 
 export default function TierListHomePage() {
   const [tierLists, setTierLists] = useState<TierList[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const trans = useTranslation();
 
   useEffect(() => {
     fetchTierLists()
@@ -17,16 +20,16 @@ export default function TierListHomePage() {
 
   if (loading) return (
     <div className="tierlist-home">
-      <div className="title--principal">Chargement...</div>
+      <div className="title--principal"> {trans("common.loading")} </div>
     </div>);
 
   return (
     <div className="tierlist-home">
-      <div className="title--principal">Tierlists</div>
+      <div className="title--principal"> {trans("common.TLs")} </div>
 
       {tierLists.length === 0 && (
         <div className="tierlist-home-empty">
-          Aucune tierlist pour le moment
+          {trans("homePage.noTL")}
         </div>
       )}
 

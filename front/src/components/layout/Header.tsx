@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useLanguage } from "../../context/LanguageContext";
+import { useTranslation } from "../../translations/useTranslation";
 
 import "./Header.css";
 
 export default function Header() {
   const location = useLocation();
   const [theme, setTheme] = useState<string | null>(null);
+  const { language, toggleLanguage } = useLanguage();
+  const trans = useTranslation();
 
   // On verifie si un theme est sauvegardé
   useEffect(() => {
@@ -50,19 +54,23 @@ export default function Header() {
 
             <nav className="nav-links">
             <Link to="/" className={isActive("/") ? "active" : ""}>
-                Galerie d'images
+                {trans("header.gallery")}
             </Link>
             <Link to="/tierlists" className={isActive("/tierlists") ? "active" : ""}>
-                TierLists
+                {trans("header.tierlists")}
             </Link>
             <Link to="/create" className={isActive("/create") ? "active" : ""}>
-                Créer une TierList
+                {trans("header.create")}
             </Link>
             </nav>
 
-            <div className="theme-wrapper">
+            <div className="context-btns">
+              <button className="btn btn--danger" onClick={toggleLanguage}>
+                {language === "fr" ? "English" : "Français"}
+              </button>
+
               <button className="btn btn--danger" onClick={toggleTheme}>
-                  {theme === "dark" ? "Clair" : "Sombre"}
+                  {theme === "dark" ? trans("common.light") : trans("common.dark")}
               </button>
             </div>
 

@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import "./TagSelector.css";
+import { useTranslation } from "../../translations/useTranslation";
 
 // Pour définir la largeur du TagSelector, le faire dans le css du composant parent, 
 // puis regler la hauteur des lignes (hauteur des tags) et le nombre initial de lignes
@@ -33,8 +34,9 @@ export default function TagSelector({
   const [rows, setRows] = useState(initialRows);
 
   const listRef = useRef<HTMLDivElement>(null);
-
   const [canGrow, setCanGrow] = useState(false);
+
+  const trans = useTranslation();
 
   // Filtre les tags selon la recherche et les organise pour mettre
   // les selctionnés en premier
@@ -77,7 +79,7 @@ export default function TagSelector({
     <div className="tag-selector">
       <input
         type="text"
-        placeholder="Rechercher un tag..."
+        placeholder={trans("tag.holderMessage")}
         value={search}
         maxLength={60}
         onChange={e => setSearch(e.target.value)}
@@ -95,7 +97,7 @@ export default function TagSelector({
       >
         {sortedTags.length === 0 ? (
           <div>
-            Aucun tag trouvé
+            {trans("tag.noTag")}
           </div>
         ) : (
           sortedTags.map(tag => {
@@ -121,7 +123,7 @@ export default function TagSelector({
             className="btn btn--secondary"
             onClick={() => setRows(r => Math.max(1, r - 2))}
           >
-            − Less
+            − {trans("common.less")}
           </button>
         )}
 
@@ -131,7 +133,7 @@ export default function TagSelector({
             className="btn btn--secondary"
             onClick={() => setRows(r => r + 2)}
           >
-            + More
+            + {trans("common.more")}
           </button>
         )}
       </div>

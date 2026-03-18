@@ -56,6 +56,10 @@
   width: 100%;
 }
 
+.tierlist-create-row .btn{
+  display: flex;
+}
+
 .tierlist-create-error {
   color: var(--color-quaternary);
   font-size: var(--text-sm);

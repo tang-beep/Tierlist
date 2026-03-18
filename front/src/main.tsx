@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { LanguageProvider } from "./context/LanguageContext.tsx";
 
 import "./styles/tokens.css";
 import "./styles/base.css";
@@ -14,7 +15,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <DndProvider backend={HTML5Backend}>
-        <App />
+        <LanguageProvider>
+          <App />
+        </LanguageProvider>
       </DndProvider>
     </BrowserRouter>
   </StrictMode>

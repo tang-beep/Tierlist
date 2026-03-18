@@ -8,11 +8,14 @@ import { useImageSelection } from "../hooks/useImageSelection";
 
 import { fetchImages, deleteImage, deleteImages } from "../api/images.api";
 import type { ImageItem } from "../types";
+import { useTranslation } from "../translations/useTranslation";
 
 export default function GalleryPage() {
   const [images, setImages] = useState<ImageItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const trans = useTranslation();
 
   const loadImages = async () => {
     setLoading(true);
@@ -25,7 +28,7 @@ export default function GalleryPage() {
       setError(
         err instanceof Error
           ? err.message
-          : "Erreur lors du chargement des images"
+          : trans("common.errLoading")
       );
     } finally {
       setLoading(false);
@@ -54,7 +57,7 @@ export default function GalleryPage() {
       await deleteImage(id);
       loadImages();
     } catch {
-      alert("Erreur lors de la suppression");
+      alert(trans("gallery.errRemove"));
     }
   };
 
@@ -62,7 +65,7 @@ export default function GalleryPage() {
     if (selectedIds.length === 0) return;
 
     const confirmDelete = window.confirm(
-      `Supprimer ${selectedIds.length} image(s) ?`
+      trans("gallery.removeConfirmation", {nb: selectedIds.length})
     );
 
     if (!confirmDelete) return;
@@ -71,20 +74,20 @@ export default function GalleryPage() {
       await deleteImages(selectedIds);
       loadImages();
     } catch {
-      alert("Erreur lors de la suppression des images");
+      alert(trans("gallery.errRemove"));
     }
   };
 
   if (loading) return (
     <div className="gallery-page">
-      <div className="title--principal">Chargement...</div>
+      <div className="title--principal"> {trans("common.loading")} </div>
     </div>);
 
   return (
     <div className="gallery-page">
       <UploadForm onUploaded={loadImages} availableTags={availableTags} />
 
-      <div className="title--principal">Liste des images</div>
+      <div className="title--principal"> {trans("gallery.title")} </div>
 
       <div className="gallery-actions">
         <TagSelector
@@ -98,15 +101,15 @@ export default function GalleryPage() {
             onClick={toggleFilterMode}
           >
             {filterMode === "optional"
-              ? "Mode : au moins un tag"
-              : "Mode : tous les tags"}
+              ? trans("tag.modeOr")
+              : trans("tag.modeAnd")}
           </button>
 
           <button
             className="btn btn--secondary"
             onClick={toggleAll}
           >
-            {allSelected ? "Tout désélectionner" : "Tout sélectionner"}
+            {allSelected ? trans("common.unselectAll") : trans("common.selectAll")}
           </button>
 
           <button
@@ -114,7 +117,7 @@ export default function GalleryPage() {
             onClick={deleteSelectedImages}
             disabled={selectedIds.length === 0}
           >
-            Supprimer la sélection
+            {trans("gallery.removeSelected")}
           </button>
         </div>
       </div>

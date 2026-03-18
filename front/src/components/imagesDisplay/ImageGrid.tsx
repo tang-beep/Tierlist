@@ -6,6 +6,9 @@ import { useImageGridLayout } from "../../hooks/useImageGridLayout";
 import { sortSelectedFirst } from "../../utils/sortImages";
 import { paginate } from "../../utils/pagination";
 import { getPageWindow } from "../../utils/pageWindow";
+import { useTranslation } from "../../translations/useTranslation";
+
+import {ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight} from "lucide-react";
 
 type GridImage = {
   id: number;
@@ -61,7 +64,9 @@ export default function ImageGrid({
   const sortedImages = useMemo(
     () => sortSelectedFirst(images, selectedIds),
     [images, selectedIds]
-  );  
+  ); 
+
+  const trans = useTranslation();
 
   // Récupère les images à afficher sur la page courante, le nb total de pages 
   // et une safePage qui permet de ne pas dépasser totalPages
@@ -112,7 +117,7 @@ export default function ImageGrid({
                       onDelete(img.id);
                     }}
                   >
-                    Supprimer
+                    {trans("common.delete")}
                   </button>
                 )}
               </div>
@@ -127,7 +132,7 @@ export default function ImageGrid({
           onClick={() => setPage(1)}
           disabled={page === 1}
         >
-          ⏮
+          <ChevronsLeft size={18} />
         </button>
 
         <button
@@ -135,7 +140,7 @@ export default function ImageGrid({
           onClick={() => setPage(p => Math.max(1, p - 1))}
           disabled={page === 1}
         >
-          ◀
+          <ChevronLeft size={18} />
         </button>
 
         <span className={`dots ${showLeftDots ? "visible" : ""}`}>…</span>
@@ -157,7 +162,7 @@ export default function ImageGrid({
           onClick={() => setPage(p => Math.min(totalPages, p + 1))}
           disabled={page === totalPages}
         >
-          ▶
+          <ChevronRight size={18} />
         </button>
 
         <button
@@ -165,7 +170,7 @@ export default function ImageGrid({
           onClick={() => setPage(totalPages)}
           disabled={page === totalPages}
         >
-          ⏭
+          <ChevronsRight size={18} />
         </button>
       </div>
     </>

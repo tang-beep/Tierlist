@@ -7,11 +7,15 @@ import { fetchTierList, removeImagesFromTierList } from "../../api/tierlists.api
 
 import type { TierListImage } from "../../types";
 
+import { useTranslation } from "../../translations/useTranslation";
+
 export default function TierListRemoveImagesPage() {
   const { id } = useParams<{ id: string }>();
 
   const [images, setImages] = useState<TierListImage[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const trans = useTranslation();
 
   useEffect(() => {
     if (!id) return;
@@ -34,11 +38,11 @@ export default function TierListRemoveImagesPage() {
 
   return (
     <TierListAddOrRemovePage
-      title="Supprimer des images"
+      title={trans("tlEdition.removeImgTitle")}
       images={images}
       loading={loading}
       actionVariant="danger"
-      actionLabel={(count) => `Supprimer ${count} images`}
+      actionLabel={(count) => trans("tlEdition.removeImgs", {count: count})}
       onConfirm={removeImagesFromTierList}
     />
   );
